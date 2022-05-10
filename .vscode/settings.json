@@ -1,0 +1,6 @@
+{
+    "conventionalCommits.scopes": [
+        "sanity_cms",
+        "register_website"
+    ]
+}

@@ -1,0 +1,24 @@
+{
+	"create new fc": {
+		"scope": "typescriptreact",
+		"prefix": ["new fc"],
+		"body": [
+			"import React from 'react';\n",
+			"const $1: React.FC = () => {",
+			"\treturn <div className=\"\"></div>;",
+			"}\n",
+			"export default $1;"
+		],
+		"description": "New functional react component"
+	},
+	"new fc": {
+		"scope": "typescriptreact",
+		"prefix": ["create fc"],
+		"body": [
+			"const $1: React.FC = () => {",
+			"\treturn <div className=\"\"></div>;",
+			"}\n",
+		],
+		"description": "Create functional react component"
+	}
+}
