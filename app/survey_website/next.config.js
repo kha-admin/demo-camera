@@ -5,6 +5,6 @@ module.exports = {
   poweredByHeader: false,
   images: {
     domains: ['images.unsplash.com', 'cdn.sanity.io'],
-    loader: 'custom',
+    // loader: 'custom',
   },
 }
