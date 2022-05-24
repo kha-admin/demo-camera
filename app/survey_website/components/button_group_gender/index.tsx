@@ -9,8 +9,8 @@ const ButtonGroupGender: React.FC<IProps> = ({ ...props }) => {
         <ButtonGroup
             {...props}
             options={[
-                { text: 'เพศชาย', value: 'm' },
-                { text: 'เพศหญิง', value: 'w' },
+                { text: 'เพศชาย', value: 'man' },
+                { text: 'เพศหญิง', value: 'woman' },
             ]}
         />
     );
