@@ -1,4 +1,3 @@
-import { ISchemaCard } from './component_card';
 import type { ISanitySchemaArray, ISchemaPage } from './types';
 
 import client from '@/sanity/client';
@@ -13,7 +12,7 @@ export const I_QUERY_PAGE_HOME = `
 
 export type IQueryPageHomeResult = ISchemaPage<{
     backgroundImage: unknown;
-    registerUI: ISanitySchemaArray<ISchemaCard>[];
+    registerUI: ISanitySchemaArray<unknown>[];
 }>;
 
 export async function queryPageHome(): Promise<IQueryPageHomeResult> {
