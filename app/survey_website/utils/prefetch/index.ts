@@ -1,7 +1,11 @@
 import { QueryClient } from 'react-query';
 
-import { I_QUERY_WIDGET_LOGO, queryWidgetLogo } from '@/data_services/sanity_widgetLogo';
-import { I_QUERY_WIDGET_NAVBAR, queryWidgetNavbar } from '@/data_services/sanity_widgetNavbar';
+import {
+    I_QUERY_WIDGET_NAVBAR,
+    queryWidgetNavbar,
+    I_QUERY_WIDGET_LOGO,
+    queryWidgetLogo,
+} from '@/data_services/sanity_groq';
 
 export async function prefetchSanityCms(
     client: QueryClient,
