@@ -7,23 +7,33 @@ export interface IProps {
     placeholder?: string;
     message?: string;
     maxLength?: number;
+    disabled?: boolean; // no background
+    ghost?: boolean; // no background
+    success?: boolean; // success color
     error?: boolean; // error color
     showCount?: boolean;
     setValue: React.Dispatch<string>;
 }
 
-const InputText: React.FC<IProps> = ({
+const Input: React.FC<IProps> = ({
     type = 'text',
     value = '',
     label,
     placeholder,
     message,
     maxLength,
+    disabled,
+    ghost,
+    success,
     error,
     showCount,
     setValue,
 }) => {
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+        if (type === 'number' && !!maxLength && e.target.value.length > maxLength) {
+            return false;
+        }
+
         setValue(e.target.value);
     };
 
@@ -38,9 +48,13 @@ const InputText: React.FC<IProps> = ({
                 value={value}
                 placeholder={placeholder}
                 maxLength={maxLength}
-                className={`input input-bordered w-full max-w-xs ${
-                    error ? 'input-error' : undefined
-                }`}
+                disabled={disabled}
+                className={[
+                    'input w-full max-w-xs',
+                    ghost ? 'input-ghost' : 'input-bordered',
+                    success ? 'input-success' : '',
+                    error ? 'input-error' : '',
+                ].join(' ')}
                 onChange={handleChange}
             />
 
@@ -56,4 +70,4 @@ const InputText: React.FC<IProps> = ({
     );
 };
 
-export default InputText;
+export default Input;
