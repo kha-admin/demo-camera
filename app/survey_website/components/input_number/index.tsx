@@ -1,14 +1,14 @@
 import React from 'react';
 
 export interface IProps {
-    value?: string;
+    value: string;
     label?: string;
     placeholder?: string;
     message?: string;
     maxLength?: number;
     error?: boolean; // error color
     showCount?: boolean;
-    setValue?: React.Dispatch<string>;
+    setValue: React.Dispatch<string>;
 }
 
 const InputNumber: React.FC<IProps> = ({
@@ -22,7 +22,7 @@ const InputNumber: React.FC<IProps> = ({
     setValue,
 }) => {
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        if ((!!maxLength && e.target.value.length > maxLength) || !setValue) {
+        if (!!maxLength && e.target.value.length > maxLength) {
             return false;
         }
 
