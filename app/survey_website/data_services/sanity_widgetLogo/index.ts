@@ -1,4 +1,4 @@
-import client from '@/sanity/client';
+import { sanityQuery } from '@/utils/sanity_client';
 
 export interface IQueryWidgetLogoResult {
     logo: unknown;
@@ -13,5 +13,5 @@ export const I_QUERY_WIDGET_LOGO = `
 `;
 
 export async function queryWidgetLogo(): Promise<IQueryWidgetLogoResult> {
-    return client.fetch<IQueryWidgetLogoResult>(I_QUERY_WIDGET_LOGO);
+    return sanityQuery<IQueryWidgetLogoResult>(I_QUERY_WIDGET_LOGO);
 }

@@ -1,8 +1,7 @@
 import { get, isObject, isString } from 'lodash-es';
 import { useNextSanityImage, type UseNextSanityImageProps } from 'next-sanity-image';
 
-import sanityClient from '../client';
-
+import sanityClient from '@/utils/sanity_client';
 import { unsplashLoader } from '@/utils/unsplash_image_loader';
 
 const defaultImageLoader: Omit<UseNextSanityImageProps, 'placeholder'> = {

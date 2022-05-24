@@ -3,9 +3,13 @@ import React, { Fragment } from 'react';
 import { useQuery } from 'react-query';
 
 import Navbar from '@/components/navbar';
-import { sanityImageProps } from '@/sanity/image';
-import { type ISchemaMetadata } from '@/sanity/query/types';
-import { I_QUERY_WIDGET_LOGO, queryWidgetLogo } from '@/sanity/query/widget_logo';
+import { type ISchemaMetadata } from '@/data_services/sanity';
+import {
+    type IQueryWidgetLogoResult,
+    I_QUERY_WIDGET_LOGO,
+    queryWidgetLogo,
+} from '@/data_services/sanity_widgetLogo';
+import { sanityImageProps } from '@/utils/sanity_image';
 
 type IProps = {
     head?: ISchemaMetadata;
@@ -14,7 +18,7 @@ type IProps = {
 const Layout: React.FC<IProps> = ({ children, head }) => {
     const {
         data: { favicon, logo },
-    } = useQuery(I_QUERY_WIDGET_LOGO, async () => queryWidgetLogo(), {
+    } = useQuery<IQueryWidgetLogoResult>(I_QUERY_WIDGET_LOGO, async () => queryWidgetLogo(), {
         staleTime: Infinity,
     });
 
