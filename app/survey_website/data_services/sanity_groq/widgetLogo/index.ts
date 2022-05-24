@@ -1,4 +1,4 @@
-import { sanityQuery } from '@/utils/sanity_client';
+import { sanityQuery } from '@/utils/client';
 
 export interface IQueryWidgetLogoResult {
     logo: unknown;

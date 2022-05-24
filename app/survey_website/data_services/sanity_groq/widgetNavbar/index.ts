@@ -1,5 +1,5 @@
-import type { ISanitySchemaArray, ISchemaSlug } from '@/data_services/sanity';
-import { sanityQuery } from '@/utils/sanity_client';
+import type { ISanitySchemaArray, ISchemaSlug } from '@/data_services/sanity_groq';
+import { sanityQuery } from '@/utils/client';
 
 export interface IQueryWidgetNavbarResult {
     navbarMenu: ISanitySchemaArray<{
