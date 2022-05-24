@@ -1,15 +1,16 @@
 import React from 'react';
 
-import InputNumber, { IProps as IPropsInputNumber } from '../input_number';
+import Input, { IProps as IInputProps } from '../input';
 
 import { isValidThaiPid } from '@/utils/pid';
 
-export type IProps = Omit<IPropsInputNumber, 'maxLength' | 'error' | 'showCount'>;
+export type IProps = Omit<IInputProps, 'type' | 'maxLength' | 'error' | 'showCount'>;
 
 const InputPid: React.FC<IProps> = ({ value, ...props }) => {
     return (
-        <InputNumber
+        <Input
             {...props}
+            type={'number'}
             value={value}
             maxLength={13}
             error={!!value && !isValidThaiPid(value)}

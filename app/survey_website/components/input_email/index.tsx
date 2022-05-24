@@ -1,19 +1,14 @@
 import React from 'react';
 
-import InputText, { IProps as IPropsInputEmail } from '../input_text';
+import Input, { IProps as IInputProps } from '../input';
 
 import { isValidEmail } from '@/utils/email';
 
-export type IProps = Omit<IPropsInputEmail, 'type' | 'error'>;
+export type IProps = Omit<IInputProps, 'type' | 'error'>;
 
 const InputEmail: React.FC<IProps> = ({ value, ...props }) => {
     return (
-        <InputText
-            {...props}
-            type={'email'}
-            value={value}
-            error={!!value && !isValidEmail(value)}
-        />
+        <Input {...props} type={'email'} value={value} error={!!value && !isValidEmail(value)} />
     );
 };
 
