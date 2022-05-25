@@ -1,4 +1,5 @@
 import React from 'react';
+import { type UseFormRegisterReturn } from 'react-hook-form';
 
 export interface IOption {
     value: string;
@@ -6,36 +7,38 @@ export interface IOption {
 }
 
 export interface IProps {
-    value: string;
-    options: Array<IOption>;
+    form?: UseFormRegisterReturn;
+    options?: Array<IOption>;
     label?: string;
-    setValue: React.Dispatch<string>;
+    message?: string;
 }
 
-const ButtonGroup: React.FC<IProps> = ({ value, options, label, setValue }) => {
-    const handleChange = (value: IOption['value']): void => {
-        setValue(value);
-    };
-
+const ButtonGroup: React.FC<IProps> = ({ form, options = [], label, message }) => {
     return (
-        <div className="form-control w-full max-w-xs">
+        <div className="form-control w-full">
             <label className="label">
-                <span className="label-text">{label}</span>
+                <span className="label-text" style={{ height: '20px' }}>
+                    {label}
+                </span>
             </label>
+
             <div className="btn-group">
                 {options.map((item, index) => (
                     <input
-                        type={'radio'}
-                        name={'options'}
+                        {...form}
                         key={index}
-                        checked={value === item.value}
+                        value={item.value}
                         data-title={item.text}
+                        type={'radio'}
                         className="btn"
                         style={{ width: `${100 / options.length}%` }}
-                        onChange={() => handleChange(item.value)}
                     />
                 ))}
             </div>
+
+            <label className="label">
+                <span className="label-text-alt text-base-300">{message}</span>
+            </label>
         </div>
     );
 };
