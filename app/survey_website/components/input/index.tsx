@@ -40,7 +40,9 @@ const Input: React.FC<IProps> = ({
     return (
         <div className="form-control">
             <label className="label">
-                <span className="label-text">{label}</span>
+                <span className="label-text" style={{ height: '20px' }}>
+                    {label}
+                </span>
             </label>
 
             <input
