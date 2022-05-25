@@ -1,4 +1,5 @@
 import React from 'react';
+import { type UseFormRegisterReturn } from 'react-hook-form';
 
 export interface IOption {
     value: string | number;
@@ -6,7 +7,7 @@ export interface IOption {
 }
 
 export interface IProps {
-    value: string; // required
+    form?: UseFormRegisterReturn;
     options?: Array<IOption>;
     label?: string;
     placeholder?: string;
@@ -15,14 +16,13 @@ export interface IProps {
     ghost?: boolean; // no background
     success?: boolean; // success color
     error?: boolean; // error color
-    clearable?: boolean;
-    clearText?: string;
     noDataText?: string;
-    setValue: React.Dispatch<string>; // required
+    clearText?: string;
+    handleClear?: React.Dispatch<unknown>;
 }
 
 const Select: React.FC<IProps> = ({
-    value = '',
+    form,
     options = [],
     label,
     placeholder,
@@ -31,19 +31,10 @@ const Select: React.FC<IProps> = ({
     ghost,
     success,
     error,
-    clearable,
     clearText,
     noDataText,
-    setValue,
+    handleClear,
 }) => {
-    const handleChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-        setValue(e.target.value);
-    };
-
-    const handleClear: React.MouseEventHandler<HTMLSpanElement> = () => {
-        setValue('');
-    };
-
     return (
         <div className="form-control">
             <label className="label">
@@ -53,7 +44,8 @@ const Select: React.FC<IProps> = ({
             </label>
 
             <select
-                value={value}
+                {...form}
+                defaultValue={''}
                 disabled={disabled}
                 className={[
                     'select w-full',
@@ -61,7 +53,6 @@ const Select: React.FC<IProps> = ({
                     success ? 'select-success' : '',
                     error ? 'select-error' : '',
                 ].join(' ')}
-                onChange={handleChange}
             >
                 {options.length === 0 ? (
                     <option value={''} disabled>
@@ -82,7 +73,7 @@ const Select: React.FC<IProps> = ({
 
             <label className="label">
                 <span className="label-text-alt text-base-300">{message}</span>
-                {clearable && (
+                {!!handleClear && (
                     <span
                         className="label-text-alt text-base-300 underline cursor-pointer"
                         onClick={handleClear}
