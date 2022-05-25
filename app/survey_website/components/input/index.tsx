@@ -1,8 +1,9 @@
 import React from 'react';
+import { type UseFormRegisterReturn } from 'react-hook-form';
 
 export interface IProps {
+    form?: UseFormRegisterReturn;
     type?: React.HTMLInputTypeAttribute;
-    value: string; // required
     label?: string;
     placeholder?: string;
     message?: string;
@@ -11,13 +12,11 @@ export interface IProps {
     ghost?: boolean; // no background
     success?: boolean; // success color
     error?: boolean; // error color
-    showCount?: boolean;
-    setValue: React.Dispatch<string>; // required
 }
 
 const Input: React.FC<IProps> = ({
+    form,
     type = 'text',
-    value = '',
     label,
     placeholder,
     message,
@@ -26,17 +25,7 @@ const Input: React.FC<IProps> = ({
     ghost,
     success,
     error,
-    showCount,
-    setValue,
 }) => {
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        if (type === 'number' && !!maxLength && e.target.value.length > maxLength) {
-            return false;
-        }
-
-        setValue(e.target.value);
-    };
-
     return (
         <div className="form-control">
             <label className="label">
@@ -46,8 +35,8 @@ const Input: React.FC<IProps> = ({
             </label>
 
             <input
+                {...form}
                 type={type}
-                value={value}
                 placeholder={placeholder}
                 maxLength={maxLength}
                 disabled={disabled}
@@ -57,16 +46,10 @@ const Input: React.FC<IProps> = ({
                     success ? 'input-success' : '',
                     error ? 'input-error' : '',
                 ].join(' ')}
-                onChange={handleChange}
             />
 
             <label className="label">
                 <span className="label-text-alt text-base-300">{message}</span>
-                {showCount && (
-                    <span className="label-text-alt text-base-300">{`${value.length} ${
-                        maxLength ? `/ ${maxLength}` : ''
-                    }`}</span>
-                )}
             </label>
         </div>
     );
