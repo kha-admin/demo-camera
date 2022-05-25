@@ -45,7 +45,7 @@ const Select: React.FC<IProps> = ({
     };
 
     return (
-        <div className="form-control w-full max-w-xs">
+        <div className="form-control">
             <label className="label">
                 <span className="label-text">{label}</span>
             </label>
@@ -54,7 +54,7 @@ const Select: React.FC<IProps> = ({
                 value={value}
                 disabled={disabled}
                 className={[
-                    'select w-full max-w-xs',
+                    'select w-full',
                     ghost ? 'select-ghost' : 'select-bordered',
                     success ? 'select-success' : '',
                     error ? 'select-error' : '',

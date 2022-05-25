@@ -38,7 +38,7 @@ const Input: React.FC<IProps> = ({
     };
 
     return (
-        <div className="form-control w-full max-w-xs">
+        <div className="form-control">
             <label className="label">
                 <span className="label-text">{label}</span>
             </label>
@@ -50,7 +50,7 @@ const Input: React.FC<IProps> = ({
                 maxLength={maxLength}
                 disabled={disabled}
                 className={[
-                    'input w-full max-w-xs',
+                    'input w-full',
                     ghost ? 'input-ghost' : 'input-bordered',
                     success ? 'input-success' : '',
                     error ? 'input-error' : '',
