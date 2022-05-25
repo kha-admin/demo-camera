@@ -2,17 +2,17 @@ import React from 'react';
 
 export interface IProps {
     type?: React.HTMLInputTypeAttribute;
-    value: string;
+    value: string; // required
     label?: string;
     placeholder?: string;
     message?: string;
     maxLength?: number;
-    disabled?: boolean; // no background
+    disabled?: boolean;
     ghost?: boolean; // no background
     success?: boolean; // success color
     error?: boolean; // error color
     showCount?: boolean;
-    setValue: React.Dispatch<string>;
+    setValue: React.Dispatch<string>; // required
 }
 
 const Input: React.FC<IProps> = ({
