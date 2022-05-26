@@ -3,18 +3,27 @@ import React, { Fragment } from 'react';
 import { useQuery } from 'react-query';
 
 import Navbar from '@/components/navbar';
-import { sanityImageProps } from '@/sanity/image';
-import { type ISchemaMetadata } from '@/sanity/query/types';
-import { I_QUERY_WIDGET_LOGO, queryWidgetLogo } from '@/sanity/query/widget_logo';
+import {
+    type IQueryWidgetLogoResult,
+    I_QUERY_WIDGET_LOGO,
+    queryWidgetLogo,
+} from '@/data_services/sanity_groq';
+import { type ISchemaMetadata } from '@/data_services/sanity_groq/sanity';
+import { sanityImageProps } from '@/utils/sanity_image';
 
 type IProps = {
     head?: ISchemaMetadata;
 };
 
 const Layout: React.FC<IProps> = ({ children, head }) => {
-    const { data } = useQuery(I_QUERY_WIDGET_LOGO, async () => queryWidgetLogo(), {
-        staleTime: Infinity,
-    });
+    const { data } = useQuery<IQueryWidgetLogoResult>(
+        I_QUERY_WIDGET_LOGO,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        async () => queryWidgetLogo(),
+        {
+            staleTime: Infinity,
+        },
+    );
 
     return (
         <Fragment>

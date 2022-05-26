@@ -1,6 +1,6 @@
-import type { ISanitySchemaArray, ISchemaSlug } from './types';
+import type { ISanitySchemaArray, ISchemaSlug } from '../sanity';
 
-import client from '@/sanity/client';
+import { sanityQuery } from '@/utils/client';
 
 export interface IQueryWidgetNavbarResult {
     navbarMenu: ISanitySchemaArray<{
@@ -18,5 +18,5 @@ export const I_QUERY_WIDGET_NAVBAR = `
 `;
 
 export async function queryWidgetNavbar(): Promise<IQueryWidgetNavbarResult> {
-    return client.fetch<IQueryWidgetNavbarResult>(I_QUERY_WIDGET_NAVBAR);
+    return sanityQuery<IQueryWidgetNavbarResult>(I_QUERY_WIDGET_NAVBAR);
 }

@@ -20,7 +20,7 @@
       "@/components/*": ["./components/*"],
       "@/styles/*": ["./styles/*"],
       "@/utils/*": ["./utils/*"],
-      "@/sanity/*": ["./sanity/*"],
+      "@/data_services/*": ["./data_services/*"],
     }
   },
   "exclude": ["node_modules"],

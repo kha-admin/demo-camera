@@ -9,7 +9,7 @@ const client = sanityClient({
 });
 
 export async function sanityQuery<T>(query: string): Promise<T> {
-    return client.fetch(query);
+    return client.fetch<T>(query);
 }
 
 export default client;
