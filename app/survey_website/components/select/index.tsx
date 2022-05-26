@@ -7,7 +7,8 @@ export interface IOption {
 }
 
 export interface IProps {
-    form?: UseFormRegisterReturn;
+    value?: IOption['value'];
+    form?: Partial<UseFormRegisterReturn>;
     options?: Array<IOption>;
     label?: string;
     placeholder?: string;
@@ -19,6 +20,7 @@ export interface IProps {
     noDataText?: string;
     clearText?: string;
     handleClear?: React.Dispatch<unknown>;
+    onChange?: React.ChangeEventHandler<HTMLSelectElement>;
 }
 
 const Select: React.FC<IProps> = ({
@@ -34,6 +36,7 @@ const Select: React.FC<IProps> = ({
     clearText,
     noDataText,
     handleClear,
+    ...props
 }) => {
     return (
         <div className="form-control">
@@ -45,7 +48,8 @@ const Select: React.FC<IProps> = ({
 
             <select
                 {...form}
-                defaultValue={''}
+                {...props} // if send "value" prop will bug with "defaultValue" but still need to use "value" prop
+                defaultValue={!props.value ? '' : undefined}
                 disabled={disabled}
                 className={[
                     'select w-full',

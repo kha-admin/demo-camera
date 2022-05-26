@@ -2,7 +2,8 @@ import React from 'react';
 import { type UseFormRegisterReturn } from 'react-hook-form';
 
 export interface IProps {
-    form?: UseFormRegisterReturn;
+    value?: string;
+    form?: Partial<UseFormRegisterReturn>;
     type?: React.HTMLInputTypeAttribute;
     label?: string;
     placeholder?: string;
@@ -12,6 +13,7 @@ export interface IProps {
     ghost?: boolean; // no background
     success?: boolean; // success color
     error?: boolean; // error color
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Input: React.FC<IProps> = ({
@@ -25,6 +27,7 @@ const Input: React.FC<IProps> = ({
     ghost,
     success,
     error,
+    ...props
 }) => {
     return (
         <div className="form-control">
@@ -36,6 +39,7 @@ const Input: React.FC<IProps> = ({
 
             <input
                 {...form}
+                {...props}
                 type={type}
                 placeholder={placeholder}
                 maxLength={maxLength}
