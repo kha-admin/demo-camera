@@ -1,6 +1,8 @@
 import React from 'react';
 import { type UseFormRegisterReturn } from 'react-hook-form';
 
+import InputWrapper from '../input_wrapper';
+
 export interface IOption {
     value: string;
     text: string;
@@ -11,35 +13,41 @@ export interface IProps {
     options?: Array<IOption>;
     label?: string;
     message?: string;
+    disabled?: boolean;
+    success?: boolean; // success color
+    error?: boolean; // error color
 }
 
-const ButtonGroup: React.FC<IProps> = ({ form, options = [], label, message }) => {
+const ButtonGroup: React.FC<IProps> = ({
+    form,
+    options = [],
+    label,
+    message,
+    disabled,
+    success,
+    error,
+}) => {
     return (
-        <div className="form-control w-full">
-            <label className="label">
-                <span className="label-text" style={{ height: '20px' }}>
-                    {label}
-                </span>
-            </label>
-
+        <InputWrapper label={label} message={message}>
             <div className="btn-group">
                 {options.map((item, index) => (
                     <input
                         {...form}
+                        type={'radio'}
                         key={index}
                         value={item.value}
                         data-title={item.text}
-                        type={'radio'}
-                        className="btn"
+                        disabled={disabled}
+                        className={[
+                            'btn btn-outline',
+                            success ? 'btn-success' : '',
+                            error ? 'btn-error' : '',
+                        ].join(' ')}
                         style={{ width: `${100 / options.length}%` }}
                     />
                 ))}
             </div>
-
-            <label className="label">
-                <span className="label-text-alt text-base-300">{message}</span>
-            </label>
-        </div>
+        </InputWrapper>
     );
 };
 

@@ -6,7 +6,8 @@ import type {
     UseFormGetValues,
 } from 'react-hook-form';
 
-import Select, { type IProps as ISelectProps } from '../select';
+import InputWrapper from '../input_wrapper';
+import { PlainSelect, type IProps as ISelectProps } from '../select';
 
 import { useSelectDateHook } from './hooks';
 
@@ -42,43 +43,45 @@ const SelectDate: React.FC<IProps> = ({
         });
 
     return (
-        <div className="grid grid-cols-3 gap-3 align-bottom">
-            <Select
-                value={date[2]}
-                label={label}
-                message={message}
-                options={days}
-                error={error}
-                placeholder={locale === 'en' ? 'date' : 'วัน'}
-                form={{
-                    onChange: handleDayChange,
-                    onBlur: form.onBlur,
-                    name: form.name,
-                }}
-            />
-            <Select
-                value={date[1]}
-                options={months}
-                error={error}
-                placeholder={locale === 'en' ? 'month' : 'เดือน'}
-                form={{
-                    onChange: handleMonthChange,
-                    onBlur: form.onBlur,
-                    name: form.name,
-                }}
-            />
-            <Select
-                value={date[0]}
-                options={years}
-                error={error}
-                placeholder={locale === 'en' ? 'year' : 'ปี'}
-                form={{
-                    onChange: handleYearChange,
-                    onBlur: form.onBlur,
-                    name: form.name,
-                }}
-            />
-        </div>
+        <InputWrapper label={label} message={message}>
+            <div className="grid grid-cols-3 gap-3 align-bottom">
+                <PlainSelect
+                    value={date[2]}
+                    options={days}
+                    error={error}
+                    placeholder={locale === 'en' ? 'date' : 'วัน'}
+                    form={{
+                        onChange: handleDayChange,
+                        onBlur: form.onBlur,
+                        name: form.name,
+                    }}
+                />
+
+                <PlainSelect
+                    value={date[1]}
+                    options={months}
+                    error={error}
+                    placeholder={locale === 'en' ? 'month' : 'เดือน'}
+                    form={{
+                        onChange: handleMonthChange,
+                        onBlur: form.onBlur,
+                        name: form.name,
+                    }}
+                />
+
+                <PlainSelect
+                    value={date[0]}
+                    options={years}
+                    error={error}
+                    placeholder={locale === 'en' ? 'year' : 'ปี'}
+                    form={{
+                        onChange: handleYearChange,
+                        onBlur: form.onBlur,
+                        name: form.name,
+                    }}
+                />
+            </div>
+        </InputWrapper>
     );
 };
 

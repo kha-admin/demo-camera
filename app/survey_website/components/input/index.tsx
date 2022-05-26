@@ -1,6 +1,8 @@
 import React from 'react';
 import { type UseFormRegisterReturn } from 'react-hook-form';
 
+import InputWrapper from '../input_wrapper';
+
 export interface IProps {
     value?: string;
     form?: Partial<UseFormRegisterReturn>;
@@ -30,13 +32,7 @@ const Input: React.FC<IProps> = ({
     ...props
 }) => {
     return (
-        <div className="form-control">
-            <label className="label">
-                <span className="label-text" style={{ height: '20px' }}>
-                    {label}
-                </span>
-            </label>
-
+        <InputWrapper label={label} message={message}>
             <input
                 {...form}
                 {...props}
@@ -51,11 +47,7 @@ const Input: React.FC<IProps> = ({
                     error ? 'input-error' : '',
                 ].join(' ')}
             />
-
-            <label className="label">
-                <span className="label-text-alt text-base-300">{message}</span>
-            </label>
-        </div>
+        </InputWrapper>
     );
 };
 
