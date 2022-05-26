@@ -8,7 +8,7 @@ import {
     type IQueryWidgetLogoResult,
     I_QUERY_WIDGET_LOGO,
     queryWidgetLogo,
-} from '@/data_services/widgetLogo';
+} from '@/data_services/sanity_groq/widgetLogo';
 import { sanityImageProps } from '@/utils/sanity_image';
 
 type IProps = {

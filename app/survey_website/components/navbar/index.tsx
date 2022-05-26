@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import { Link } from '@/components/links';
-import { type IQueryWidgetNavbarResult } from '@/data_services/sanity_widgetNavbar';
+import { type IQueryWidgetNavbarResult } from '@/data_services/sanity_groq';
 import { sanityImageProps } from '@/utils/sanity_image';
 
 export interface INavbarProps {
