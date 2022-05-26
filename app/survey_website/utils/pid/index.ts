@@ -1,4 +1,10 @@
-export function isValidThaiPid(value: string): boolean {
+import { isString } from 'lodash-es';
+
+export function isValidThaiPid(value: unknown): boolean {
+    if (!isString(value)) {
+        return false;
+    }
+
     const last = parseInt(value[value.length - 1], 10);
     let sum = 0;
     let count = 0;
