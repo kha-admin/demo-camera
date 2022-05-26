@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Input, { IProps as IInputProps } from '../input';
+import Input, { type IProps as IInputProps } from '../input';
 
 export type IProps = Omit<IInputProps, 'type' | 'ghost'>;
 

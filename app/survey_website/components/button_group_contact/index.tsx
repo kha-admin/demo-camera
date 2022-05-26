@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ButtonGroup, { IProps as IPropsButtonGroup } from '../button_group';
+import ButtonGroup, { type IProps as IPropsButtonGroup } from '../button_group';
 
 export type IProps = Omit<IPropsButtonGroup, 'options'>;
 
