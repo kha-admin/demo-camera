@@ -1,4 +1,5 @@
-import { getDaysInMonth, isDate } from 'date-fns';
+import { getDaysInMonth } from 'date-fns';
+import { isDate, isNumber } from 'lodash-es';
 import { useEffect, useState } from 'react';
 import { type ChangeHandler } from 'react-hook-form';
 
@@ -12,7 +13,7 @@ export type IUseSelectDateHookParams = Pick<
 >;
 
 export interface IUseSelectDateHookResult {
-    date: [number, number, number]; // [year, day, month]
+    date: [number?, number?, number?]; // [year, day, month]
     days: IOption[];
     months: IOption[];
     years: IOption[];
@@ -56,11 +57,7 @@ function useSelectDateHook(params: IUseSelectDateHookParams): IUseSelectDateHook
 
     const today = new Date();
 
-    const [date, setDate] = useState<[number, number, number]>([
-        today.getFullYear(),
-        today.getMonth(), // 0-11
-        today.getDate(),
-    ]); // [year, day, month]
+    const [date, setDate] = useState<IUseSelectDateHookResult['date']>([]); // [year, day, month]
 
     const [dayRange, setDayRange] = useState<[number, number]>([1, 31]); // [start, end]
 
@@ -112,33 +109,27 @@ function useSelectDateHook(params: IUseSelectDateHookParams): IUseSelectDateHook
     };
 
     const handleDayChange: ChangeHandler = async (e) => {
-        form.onChange(e);
-
         setDate((prev) => [prev[0], prev[1], parseInt(e.target.value, 10)]);
 
-        return true;
+        return form.onChange(e);
     };
 
     const handleMonthChange: ChangeHandler = async (e) => {
-        form.onChange(e);
+        setDate((prev) => [prev[0], parseInt(e.target.value, 10), undefined]);
 
-        setDate((prev) => [prev[0], parseInt(e.target.value, 10), prev[2]]);
-
-        return true;
+        return form.onChange(e);
     };
 
     const handleYearChange: ChangeHandler = async (e) => {
-        form.onChange(e);
+        setDate((prev) => [parseInt(e.target.value, 10), prev[1], undefined]);
 
-        setDate((prev) => [parseInt(e.target.value, 10), prev[1], prev[2]]);
-
-        return true;
+        return form.onChange(e);
     };
 
     const handleMounted = (): void => {
         const value = getValues(form.name);
 
-        if (!value || !isDate(value)) {
+        if (!isDate(value)) {
             return;
         }
 
@@ -154,11 +145,28 @@ function useSelectDateHook(params: IUseSelectDateHookParams): IUseSelectDateHook
     }, []);
 
     useEffect(() => {
-        setValue(form.name, new Date(date[0], date[1], date[2]));
+        const year = date[0];
+        const month = date[1];
+        const day = date[2];
+
+        if (!isNumber(year) || !isNumber(month) || !isNumber(day)) {
+            setValue(form.name, undefined);
+
+            return;
+        }
+
+        setValue(form.name, new Date(year, month, day));
     }, [date]);
 
     useEffect(() => {
-        setDayRange((prev) => [prev[0], getDays(date[0], date[1])]);
+        const year = date[0];
+        const month = date[1];
+
+        if (!isNumber(year) || !isNumber(month)) {
+            return;
+        }
+
+        setDayRange((prev) => [prev[0], getDays(year, month)]);
     }, [date[0], date[1]]);
 
     return {

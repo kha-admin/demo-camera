@@ -1,10 +1,5 @@
 import React from 'react';
-import type {
-    UseFormRegisterReturn,
-    FieldValues,
-    UseFormSetValue,
-    UseFormGetValues,
-} from 'react-hook-form';
+import type { UseFormRegisterReturn, UseFormSetValue, UseFormGetValues } from 'react-hook-form';
 
 import InputWrapper from '../input_wrapper';
 import { PlainSelect, type IProps as ISelectProps } from '../select';
@@ -17,8 +12,10 @@ export interface IProps extends Pick<ISelectProps, 'label' | 'message' | 'error'
     startYear?: number;
     endYear?: number;
     locale?: 'th' | 'en';
-    getValues: UseFormGetValues<FieldValues>; // required
-    setValue: UseFormSetValue<FieldValues>; // required
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getValues: UseFormGetValues<any>; // required
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setValue: UseFormSetValue<any>; // required
 }
 
 const SelectDate: React.FC<IProps> = ({
@@ -46,7 +43,7 @@ const SelectDate: React.FC<IProps> = ({
         <InputWrapper label={label} message={message}>
             <div className="grid grid-cols-3 gap-3 align-bottom">
                 <PlainSelect
-                    value={date[2]}
+                    value={date[2] || ''}
                     options={days}
                     error={error}
                     placeholder={locale === 'en' ? 'date' : 'วัน'}
@@ -58,7 +55,7 @@ const SelectDate: React.FC<IProps> = ({
                 />
 
                 <PlainSelect
-                    value={date[1]}
+                    value={date[1] || ''}
                     options={months}
                     error={error}
                     placeholder={locale === 'en' ? 'month' : 'เดือน'}
@@ -70,7 +67,7 @@ const SelectDate: React.FC<IProps> = ({
                 />
 
                 <PlainSelect
-                    value={date[0]}
+                    value={date[0] || ''}
                     options={years}
                     error={error}
                     placeholder={locale === 'en' ? 'year' : 'ปี'}
