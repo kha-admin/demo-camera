@@ -43,7 +43,7 @@ export const PlainSelect: React.FC<
         <select
             {...form}
             {...props} // if send "value" prop will bug with "defaultValue" but still need to use "value" prop
-            defaultValue={!props.value ? '' : undefined}
+            defaultValue={props.value === undefined ? '' : undefined}
             disabled={disabled}
             className={[
                 'select w-full',
