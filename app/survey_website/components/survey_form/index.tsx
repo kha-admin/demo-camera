@@ -1,35 +1,24 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
 
 import SurveyFormLayout from '../layout/survey_form_layout';
 
-import FormStep1 from './form_step_1';
-import FormStep2 from './form_step_2';
-import FormStep3 from './form_step_3';
+import FormStep1 from './components/form_step_1';
+import FormStep2 from './components/form_step_2';
+import FormStep3 from './components/form_step_3';
+import { useSurveyFormHook } from './hooks';
 
 const SurveyForm: React.FC = () => {
-    const steps = [
-        { title: 'ยืนยันตัวตน' },
-        { title: 'ข้อมูลส่วนตัว' },
-        { title: 'ที่อยู่อาศัย' },
-        { title: 'อื่นๆ' },
-    ];
-
-    const { formState, register, getValues, setValue, handleSubmit } = useForm({
-        mode: 'onChange',
-    });
-
-    const [current, setCurrent] = useState<number>(0);
-
-    const handleNext = (): void => {
-        console.log('handleNext: ', getValues());
-
-        if (current + 1 === steps.length) {
-            return;
-        }
-
-        setCurrent((prev) => (prev += 1));
-    };
+    const {
+        steps,
+        current,
+        formState,
+        setCurrent,
+        register,
+        getValues,
+        setValue,
+        handleSubmit,
+        submit,
+    } = useSurveyFormHook();
 
     return (
         <div className="flex justify-center">
@@ -46,7 +35,7 @@ const SurveyForm: React.FC = () => {
                             <h2 className="card-title">{steps[current]?.title}</h2>
 
                             {/* card-content */}
-                            <form>
+                            <form onSubmit={handleSubmit(submit)}>
                                 {current === 0 && (
                                     <FormStep1 formState={formState} register={register} />
                                 )}
@@ -68,19 +57,14 @@ const SurveyForm: React.FC = () => {
                                         setValue={setValue}
                                     />
                                 )}
-                            </form>
 
-                            {/* card-action */}
-                            <div className="card-actions justify-center">
-                                <button
-                                    className="btn btn-primary"
-                                    onClick={handleSubmit(handleNext, (errors) => {
-                                        console.log('errors: ', errors);
-                                    })}
-                                >
-                                    ถัดไป
-                                </button>
-                            </div>
+                                {/* card-action */}
+                                <div className="card-actions justify-center">
+                                    <button type={'submit'} className="btn btn-wide btn-primary">
+                                        {current + 1 === steps.length ? 'ส่งข้อมูล' : 'ถัดไป'}
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </SurveyFormLayout>

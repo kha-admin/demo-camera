@@ -18,7 +18,7 @@ const FormStep1: React.FC<IProps> = ({ formState, register }) => {
                 ข้อมูลเหล่านี้จะใช้แทนชื่อบัญชีผู้ลงทะเบียนใช้บริการสำหรับการล็อกอินเข้าสู่ระบบข้อมูลของท่านต่อไป
             </p>
 
-            <div className="w-full lg:w-1/2">
+            <div className="w-full md:w-1/2">
                 <Input
                     form={register('phoneNumber', {
                         required: true,

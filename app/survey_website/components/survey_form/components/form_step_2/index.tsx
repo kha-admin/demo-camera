@@ -13,6 +13,7 @@ import Input from '@/components/input';
 import InputFile from '@/components/input_file';
 import Select from '@/components/select';
 import SelectDate from '@/components/select_date';
+import { regexEmail } from '@/utils/regex';
 
 export interface IProps {
     formState: FormState<FieldValues>;
@@ -54,12 +55,13 @@ const FormStep2: React.FC<IProps> = ({ formState, register, getValues, setValue 
                     form={register('birthday', {
                         required: true,
                     })}
+                    locale={'th'}
                     label={'วันเกิดตามบัตรประชาชน'}
                     startYear={new Date().getFullYear() - 120}
                     endYear={new Date().getFullYear()}
                     error={!!formState.errors['birthday']}
-                    setValue={setValue}
                     getValues={getValues}
+                    setValue={setValue}
                 />
 
                 <InputFile
@@ -76,6 +78,7 @@ const FormStep2: React.FC<IProps> = ({ formState, register, getValues, setValue 
                 <Input
                     form={register('email', {
                         required: true,
+                        pattern: regexEmail,
                     })}
                     label={'อีเมล'}
                     message={'ตัวอย่าง demo@kha.co.th'}
@@ -110,9 +113,7 @@ const FormStep2: React.FC<IProps> = ({ formState, register, getValues, setValue 
                 />
 
                 <InputFile
-                    form={register('pidImage', {
-                        required: true,
-                    })}
+                    form={register('pidImage')}
                     label={'ถ่ายรูปหน้าบัตรประชาชน'}
                     error={!!formState.errors['pidImage']}
                 />
