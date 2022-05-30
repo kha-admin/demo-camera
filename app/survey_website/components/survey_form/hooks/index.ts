@@ -67,7 +67,7 @@ function useSurveyFormHook(): IUseSurveyFormHookResult {
         mode: 'onChange',
     });
 
-    const [current, setCurrent] = useState<number>(1);
+    const [current, setCurrent] = useState<number>(0);
 
     const submit: SubmitHandler<FieldValues> = (): void => {
         if (current + 1 === steps.length) {
