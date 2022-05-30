@@ -1,16 +1,18 @@
 import React from 'react';
-import type { FieldValues, FormState, UseFormRegister } from 'react-hook-form';
+import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+
+import { type IFormFieldValues } from '../../hooks';
 
 import Input from '@/components/input';
 import { isValidThaiPid } from '@/utils/pid';
 import { regexThPhoneNumber } from '@/utils/regex';
 
 export interface IProps {
-    formState: FormState<FieldValues>;
-    register: UseFormRegister<FieldValues>;
+    errors: FieldErrors<IFormFieldValues>;
+    register: UseFormRegister<IFormFieldValues>;
 }
 
-const FormStep1: React.FC<IProps> = ({ formState, register }) => {
+const FormStep1: React.FC<IProps> = ({ errors, register }) => {
     return (
         <div className="grid grid-cols-1 gap-6">
             <p>
@@ -29,7 +31,7 @@ const FormStep1: React.FC<IProps> = ({ formState, register }) => {
                     label={'หมายเลขโทรศัพท์มือถือ'}
                     message={'ตัวอย่าง 099-000-1234'}
                     type={'number'}
-                    error={!!formState.errors['phoneNumber']}
+                    error={!!errors['phoneNumber']}
                 />
 
                 <Input
@@ -42,7 +44,7 @@ const FormStep1: React.FC<IProps> = ({ formState, register }) => {
                     label={'หมายเลขประจำตัวประชาชน'}
                     message={'ตัวอย่าง 3-1111-11111-11-9'}
                     type={'number'}
-                    error={!!formState.errors['pid']}
+                    error={!!errors['pid']}
                 />
             </div>
         </div>

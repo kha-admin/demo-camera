@@ -11,11 +11,11 @@ const SurveyForm: React.FC = () => {
     const {
         steps,
         current,
-        formState,
+        errors,
         setCurrent,
         register,
         getValues,
-        setValue,
+        resetField,
         handleSubmit,
         submit,
     } = useSurveyFormHook();
@@ -36,27 +36,18 @@ const SurveyForm: React.FC = () => {
 
                             {/* card-content */}
                             <form onSubmit={handleSubmit(submit)}>
-                                {current === 0 && (
-                                    <FormStep1 formState={formState} register={register} />
-                                )}
+                                {current === 0 && <FormStep1 errors={errors} register={register} />}
 
                                 {current === 1 && (
                                     <FormStep2
-                                        formState={formState}
+                                        errors={errors}
                                         register={register}
                                         getValues={getValues}
-                                        setValue={setValue}
+                                        resetField={resetField}
                                     />
                                 )}
 
-                                {current === 2 && (
-                                    <FormStep3
-                                        formState={formState}
-                                        register={register}
-                                        getValues={getValues}
-                                        setValue={setValue}
-                                    />
-                                )}
+                                {current === 2 && <FormStep3 errors={errors} register={register} />}
 
                                 {/* card-action */}
                                 <div className="card-actions justify-center">

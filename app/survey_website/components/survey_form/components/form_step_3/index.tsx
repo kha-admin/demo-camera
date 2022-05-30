@@ -1,104 +1,98 @@
 import React from 'react';
-import type {
-    FieldValues,
-    FormState,
-    UseFormGetValues,
-    UseFormRegister,
-    UseFormSetValue,
-} from 'react-hook-form';
+import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+
+import { type IFormFieldValues } from '../../hooks';
 
 import Textarea from '@/components/Textarea';
 import Input from '@/components/input';
 import Select from '@/components/select';
 
 export interface IProps {
-    formState: FormState<FieldValues>;
-    register: UseFormRegister<FieldValues>;
-    getValues: UseFormGetValues<FieldValues>;
-    setValue: UseFormSetValue<FieldValues>;
+    errors: FieldErrors<IFormFieldValues>;
+    register: UseFormRegister<IFormFieldValues>;
 }
 
-const FormStep3: React.FC<IProps> = ({ formState, register }) => {
+const FormStep3: React.FC<IProps> = ({ errors, register }) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
             {/* left */}
             <div>
                 <Input
-                    form={register('address', {
+                    form={register('address1', {
                         required: true,
                     })}
                     label={'บ้านเลขที่'}
-                    error={!!formState.errors['address']}
+                    error={!!errors['address1']}
                 />
 
                 <Input
-                    form={register('building', {
+                    form={register('addressBuilding', {
                         required: true,
                     })}
                     label={'อาคาร'}
-                    error={!!formState.errors['building']}
+                    error={!!errors['addressBuilding']}
                 />
 
                 <Select
-                    form={register('province', {
+                    form={register('provinceId', {
                         required: true,
                     })}
                     options={[]}
                     label={'จังหวัด'}
-                    error={!!formState.errors['province']}
+                    error={!!errors['provinceId']}
                 />
 
                 <Select
-                    form={register('district', {
+                    form={register('districtId', {
                         required: true,
                     })}
                     options={[]}
                     label={'อำเภอ/เขต'}
-                    error={!!formState.errors['district']}
+                    error={!!errors['districtId']}
                 />
 
                 <Select
-                    form={register('subDistrict', {
+                    form={register('subDistrictId', {
                         required: true,
                     })}
                     options={[]}
                     label={'ตำบล/แขวง'}
-                    error={!!formState.errors['subDistrict']}
+                    error={!!errors['subDistrictId']}
                 />
             </div>
 
             {/* right */}
             <div>
                 <Input
-                    form={register('room', {
+                    form={register('addressRoom', {
                         required: true,
                     })}
                     label={'ห้อง'}
-                    error={!!formState.errors['room']}
+                    error={!!errors['addressRoom']}
                 />
 
                 <Input
-                    form={register('alley', {
+                    form={register('addressAlley', {
                         required: true,
                     })}
                     label={'ซอย'}
-                    error={!!formState.errors['alley']}
+                    error={!!errors['addressAlley']}
                 />
 
                 <Input
-                    form={register('street', {
+                    form={register('addressStreet', {
                         required: true,
                     })}
                     label={'ถนน'}
-                    error={!!formState.errors['street']}
+                    error={!!errors['addressStreet']}
                 />
 
                 <Textarea
-                    form={register('memo', {
+                    form={register('addressMemo', {
                         required: true,
                     })}
                     label={'คำอธิบาย (หมายเหตุ)'}
-                    error={!!formState.errors['memo']}
+                    error={!!errors['addressMemo']}
                 />
             </div>
         </div>

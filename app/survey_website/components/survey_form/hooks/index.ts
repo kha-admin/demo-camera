@@ -2,26 +2,52 @@ import React, { useState } from 'react';
 import type {
     FieldValues,
     SubmitHandler,
-    FormState,
     UseFormRegister,
-    UseFormGetValues,
-    UseFormSetValue,
     UseFormHandleSubmit,
+    UseFormResetField,
+    UseFormGetValues,
+    FieldErrors,
 } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { type IProps as IStepsProps } from '@/components/steps';
 
+export interface IFormFieldValues {
+    phoneNumber: string; // msisdn
+    pid: string;
+    gender: string;
+    firstName: string;
+    lastName: string;
+    birthDate: number;
+    birthMonth: number;
+    birthYear: number;
+    email: string;
+    preferContactChannel: string;
+    maritalStatusId: number;
+    occupationId: number;
+    faceImageUploadPath: string;
+    idCardImageUploadPath: string;
+    address1: string;
+    addressBuilding: string;
+    provinceId: number;
+    districtId: number;
+    subDistrictId: number;
+    addressRoom: string;
+    addressAlley: string;
+    addressStreet: string;
+    addressMemo: string;
+}
+
 export interface IUseSurveyFormHookResult {
     steps: IStepsProps['steps'];
     current: number;
-    formState: FormState<FieldValues>;
+    errors: FieldErrors<IFormFieldValues>;
     setCurrent: React.Dispatch<React.SetStateAction<number>>;
-    register: UseFormRegister<FieldValues>;
-    getValues: UseFormGetValues<FieldValues>;
-    setValue: UseFormSetValue<FieldValues>;
-    handleSubmit: UseFormHandleSubmit<FieldValues>;
-    submit: SubmitHandler<FieldValues>;
+    register: UseFormRegister<IFormFieldValues>;
+    getValues: UseFormGetValues<IFormFieldValues>;
+    resetField: UseFormResetField<IFormFieldValues>;
+    handleSubmit: UseFormHandleSubmit<IFormFieldValues>;
+    submit: SubmitHandler<IFormFieldValues>;
 }
 
 function useSurveyFormHook(): IUseSurveyFormHookResult {
@@ -31,11 +57,17 @@ function useSurveyFormHook(): IUseSurveyFormHookResult {
         { title: 'ที่อยู่อาศัย' },
     ];
 
-    const { formState, register, getValues, setValue, handleSubmit } = useForm({
-        mode: 'all',
+    const {
+        formState: { errors },
+        register,
+        getValues,
+        resetField,
+        handleSubmit,
+    } = useForm<IFormFieldValues>({
+        mode: 'onChange',
     });
 
-    const [current, setCurrent] = useState<number>(0);
+    const [current, setCurrent] = useState<number>(1);
 
     const submit: SubmitHandler<FieldValues> = (): void => {
         if (current + 1 === steps.length) {
@@ -48,11 +80,11 @@ function useSurveyFormHook(): IUseSurveyFormHookResult {
     return {
         steps,
         current,
-        formState,
+        errors,
         setCurrent,
         register,
         getValues,
-        setValue,
+        resetField,
         handleSubmit,
         submit,
     };
