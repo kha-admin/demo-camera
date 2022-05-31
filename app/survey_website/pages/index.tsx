@@ -10,14 +10,14 @@ import { prefetchSanityCms } from '@/utils/prefetch';
 
 type IProps = IPageProps;
 
-interface ITestSelectProvice {
+interface ITestSelectProvince {
     provice_id?: number;
     district_id?: number;
     subdistrict_id?: number;
 }
 
 const Home: React.FC = () => {
-    const [proviceState, setProviceState] = useState<ITestSelectProvice>({});
+    const [provinceState, setProvinceState] = useState<ITestSelectProvince>({});
 
     return (
         <Layout>
@@ -30,11 +30,33 @@ const Home: React.FC = () => {
                             <form action="" className="flex flex-col lg:flex-row gap-4">
                                 <SelectProvice
                                     onChange={(e) => {
-                                        setProviceState({ provice_id: Number(e.target.value) });
+                                        setProvinceState({
+                                            provice_id: Number(e.target.value),
+                                            district_id: undefined,
+                                            subdistrict_id: undefined,
+                                        });
                                     }}
                                 />
-                                <SelectDistrict proviceId={proviceState.provice_id} />
-                                <SelectSubdistrict />
+                                <SelectDistrict
+                                    provinceId={provinceState.provice_id}
+                                    onChange={(e) => {
+                                        setProvinceState({
+                                            ...provinceState,
+                                            district_id: Number(e.target.value),
+                                            subdistrict_id: undefined,
+                                        });
+                                    }}
+                                />
+                                <SelectSubdistrict
+                                    provinceId={provinceState.provice_id}
+                                    districtId={provinceState.district_id}
+                                    onChange={(e) => {
+                                        setProvinceState({
+                                            ...provinceState,
+                                            subdistrict_id: Number(e.target.value),
+                                        });
+                                    }}
+                                />
                             </form>
                         </div>
                     </div>
