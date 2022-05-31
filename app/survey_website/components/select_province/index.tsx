@@ -1,14 +1,14 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { getThaiProviceData, I_GET_THAI_PROVICE_KEY } from '@/data_services/thai_province_data';
+import { getThaiProvinceData, I_GET_THAI_PROVICE_KEY } from '@/data_services/thai_province_data';
 
 interface IProps {
     onChange?: React.ChangeEventHandler<HTMLSelectElement>;
 }
 
 const SelectProvince: React.FC<IProps> = ({ onChange }) => {
-    const { isLoading, data } = useQuery(I_GET_THAI_PROVICE_KEY, async () => getThaiProviceData(), {
+    const { isLoading, data } = useQuery(I_GET_THAI_PROVICE_KEY, () => getThaiProvinceData(), {
         staleTime: Infinity,
     });
 
