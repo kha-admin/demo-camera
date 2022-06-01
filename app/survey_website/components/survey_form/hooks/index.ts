@@ -16,29 +16,29 @@ import { IOption } from '@/components/select';
 import { type IProps as IStepsProps } from '@/components/steps';
 
 export interface IFormFieldValues {
-    phoneNumber: string; // msisdn
-    pid: string;
-    gender: string;
-    firstName: string;
-    lastName: string;
-    birthDate: IOption<number | null>;
-    birthMonth: IOption<number | null>;
-    birthYear: IOption<number | null>;
-    email: string;
-    preferContactChannel: string;
-    maritalStatus: number;
-    occupation: number;
-    faceImageUploadPath: FileList;
-    idCardImageUploadPath: FileList;
-    address1: string;
-    addressBuilding: string;
-    province: IOption<number | null>;
-    district: IOption<number | null>;
-    subDistrict: IOption<number | null>;
-    addressRoom: string;
-    addressAlley: string;
-    addressStreet: string;
-    addressMemo: string;
+    phoneNumber?: string; // msisdn
+    pid?: string;
+    gender?: string;
+    firstName?: string;
+    lastName?: string;
+    birthDate?: IOption<number> | null;
+    birthMonth?: IOption<number> | null;
+    birthYear?: IOption<number> | null;
+    email?: string;
+    preferContactChannel?: string;
+    maritalStatus?: number;
+    occupation?: number;
+    faceImageUploadPath?: FileList;
+    idCardImageUploadPath?: FileList;
+    address1?: string;
+    addressBuilding?: string;
+    province?: IOption<number> | null;
+    district?: IOption<number> | null;
+    subDistrict?: IOption<number> | null;
+    addressRoom?: string;
+    addressAlley?: string;
+    addressStreet?: string;
+    addressMemo?: string;
 }
 
 export interface IUseSurveyFormHookResult {
