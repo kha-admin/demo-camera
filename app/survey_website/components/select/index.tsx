@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller, type Control, type UseControllerProps } from 'react-hook-form';
 import ReactSelect, { type Options } from 'react-select';
 
-type IDefaultOptionValue = string | number | null;
+type IDefaultOptionValue = string | number;
 
 export interface IOption<T = IDefaultOptionValue> {
     label: string;
