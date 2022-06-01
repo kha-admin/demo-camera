@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 
+import Select, { type IOption, type IProps as ISelectProps } from '@/components/select';
 import {
     getDistrict,
-    IDistrictData,
+    type IDistrictData,
     I_GET_THAI_PROVICE_KEY,
 } from '@/data_services/thai_province_data';
 
-interface IProps {
+export interface IProps extends Omit<ISelectProps, 'options' | 'disabled'> {
     provinceId?: number;
-    onChange?: React.ChangeEventHandler<HTMLSelectElement>;
+    locale?: 'en' | 'th';
 }
 
-const SelectDistrict: React.FC<IProps> = ({ provinceId, onChange }) => {
-    const [district, setDistrict] = useState<IDistrictData[]>([]);
-    const [selectValue, setSelectValue] = useState<string>('');
-
-    const { isLoading, isFetched, refetch } = useQuery<
+const SelectDistrict: React.FC<IProps> = ({ provinceId, locale = 'en', ...props }) => {
+    const { data, isLoading, isFetched, refetch } = useQuery<
         IDistrictData[],
         unknown,
         IDistrictData[],
@@ -33,45 +31,24 @@ const SelectDistrict: React.FC<IProps> = ({ provinceId, onChange }) => {
         {
             enabled: !!provinceId,
             staleTime: Infinity,
-            onSuccess: (result) => {
-                setDistrict(result);
-            },
         },
     );
 
+    const mapNormalizeOption = (items?: IDistrictData[]): ISelectProps['options'] => {
+        return items?.map(
+            (item): IOption<IDistrictData['id']> => ({
+                label: locale === 'en' ? item.name_en : item.name_th,
+                value: item.id,
+            }),
+        );
+    };
+
     useEffect(() => {
-        setSelectValue('');
         if (isFetched) refetch();
     }, [provinceId]);
 
     return (
-        <div className="form-control w-full">
-            <label className="label">
-                <span className="label-text">อำเภอ / เขต</span>
-            </label>
-            <select
-                className="select select-bordered"
-                value={selectValue}
-                disabled={isLoading || !provinceId}
-                onChange={
-                    onChange
-                        ? (e) => {
-                              setSelectValue(e.target.value);
-                              onChange(e);
-                          }
-                        : undefined
-                }
-            >
-                <option disabled value="">
-                    เลือกอำเภอ / เขต
-                </option>
-                {district.map((item) => (
-                    <option key={item.name_en} value={item.id}>
-                        {item.name_th}
-                    </option>
-                ))}
-            </select>
-        </div>
+        <Select {...props} options={mapNormalizeOption(data)} disabled={isLoading || !provinceId} />
     );
 };
 
