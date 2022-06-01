@@ -4,6 +4,8 @@ import { type UseFormRegisterReturn } from 'react-hook-form';
 export interface IProps {
     form?: Partial<UseFormRegisterReturn>;
     type?: React.HTMLInputTypeAttribute; // input-type
+    accept?: React.InputHTMLAttributes<HTMLInputElement>['accept'];
+    capture?: React.InputHTMLAttributes<HTMLInputElement>['capture'];
     placeholder?: string;
     maxLength?: number;
     disabled?: boolean;
@@ -17,6 +19,8 @@ export interface IProps {
 const Input: React.FC<IProps> = ({
     form,
     type = 'text',
+    accept,
+    capture,
     placeholder,
     maxLength,
     disabled,
@@ -30,6 +34,8 @@ const Input: React.FC<IProps> = ({
             {...form}
             {...props}
             type={type}
+            accept={accept}
+            capture={capture}
             placeholder={placeholder}
             maxLength={maxLength}
             disabled={disabled}

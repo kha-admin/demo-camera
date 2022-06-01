@@ -143,6 +143,7 @@ const FormStep2: React.FC<IProps> = ({
                         required: true,
                     })}
                     type={'file'}
+                    accept={'image/*'}
                     error={!!errors['faceImageUploadPath']}
                     ghost
                 />
@@ -152,6 +153,7 @@ const FormStep2: React.FC<IProps> = ({
                 <Input
                     form={register('idCardImageUploadPath')}
                     type={'file'}
+                    accept={'image/*'}
                     error={!!errors['idCardImageUploadPath']}
                     ghost
                 />
