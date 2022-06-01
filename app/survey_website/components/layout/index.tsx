@@ -3,12 +3,12 @@ import React, { Fragment } from 'react';
 import { useQuery } from 'react-query';
 
 import Navbar from '@/components/navbar';
+import { type ISchemaMetadata } from '@/data_services/sanity_groq/sanity';
 import {
     type IQueryWidgetLogoResult,
     I_QUERY_WIDGET_LOGO,
     queryWidgetLogo,
-} from '@/data_services/sanity_groq';
-import { type ISchemaMetadata } from '@/data_services/sanity_groq/sanity';
+} from '@/data_services/sanity_groq/widgetLogo';
 import { sanityImageProps } from '@/utils/sanity_image';
 
 type IProps = {

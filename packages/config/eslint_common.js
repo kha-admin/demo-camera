@@ -85,12 +85,13 @@ const namingConventionBaseRule = [
         ecmaFeatures: {
           jsx: true,
         },
-        ecmaVersion: 12,
+        ecmaVersion: 2020,
         sourceType: 'module',
       },
       extends: [
         'eslint:recommended',
         'plugin:react/recommended',
+        'plugin:@next/next/recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:import/recommended',
         'plugin:import/typescript',
@@ -100,6 +101,7 @@ const namingConventionBaseRule = [
           'import/no-unresolved': 'off',
           'react/display-name': 'off',
           'no-return-await': 'error',
+          'no-unsafe-optional-chaining': 'error',
           '@typescript-eslint/explicit-module-boundary-types': 'off',
           '@typescript-eslint/explicit-function-return-type': [
             'error',

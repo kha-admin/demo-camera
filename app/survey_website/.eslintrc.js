@@ -1,7 +1,6 @@
 const path = require('path')
 
-const resolveConfigDir = (fileName) =>
-  path.resolve(path.join(__dirname, '../../packages/config/', fileName))
+const resolveConfigDir = (fileName) => path.join(__dirname, '../../packages/config/', fileName)
 
 module.exports = exports = {
   env: {
@@ -13,12 +12,13 @@ module.exports = exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 12,
+    ecmaVersion: 2020,
     sourceType: 'module',
   },
   extends: ['eslint:recommended', 'plugin:import/recommended', 'plugin:prettier/recommended'],
   rules: {
     'prettier/prettier': 'error',
+    'no-unsafe-optional-chaining': 'error',
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/prefer-default-export': 0,
