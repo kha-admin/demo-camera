@@ -1,53 +1,49 @@
 import React from 'react';
 import { type UseFormRegisterReturn } from 'react-hook-form';
 
-import InputWrapper from '../input_wrapper';
-
 export interface IOption {
-    value: string;
     text: string;
+    value: string;
 }
 
 export interface IProps {
-    form?: UseFormRegisterReturn;
+    form?: Partial<UseFormRegisterReturn>;
     options?: Array<IOption>;
-    label?: string;
-    message?: string;
     disabled?: boolean;
     success?: boolean; // success color
     error?: boolean; // error color
+    value?: IOption['value'];
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const ButtonGroup: React.FC<IProps> = ({
     form,
     options = [],
-    label,
-    message,
     disabled,
     success,
     error,
+    ...props
 }) => {
     return (
-        <InputWrapper label={label} message={message}>
-            <div className="btn-group">
-                {options.map((item, index) => (
-                    <input
-                        {...form}
-                        type={'radio'}
-                        key={index}
-                        value={item.value}
-                        data-title={item.text}
-                        disabled={disabled}
-                        className={[
-                            'btn btn-outline',
-                            success ? 'btn-success' : '',
-                            error ? 'btn-error' : '',
-                        ].join(' ')}
-                        style={{ width: `${100 / options.length}%` }}
-                    />
-                ))}
-            </div>
-        </InputWrapper>
+        <div className="btn-group">
+            {options.map((item, index) => (
+                <input
+                    {...form}
+                    {...props}
+                    type={'radio'}
+                    key={index}
+                    value={item.value}
+                    data-title={item.text}
+                    disabled={disabled}
+                    className={[
+                        'btn btn-outline border-base-300',
+                        success ? 'btn-success border-green-500' : '',
+                        error ? 'btn-error border-red-500' : '',
+                    ].join(' ')}
+                    style={{ width: `${100 / options.length}%` }}
+                />
+            ))}
+        </div>
     );
 };
 
