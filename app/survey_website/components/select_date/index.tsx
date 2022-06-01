@@ -1,81 +1,84 @@
 import React from 'react';
-import type { UseFormGetValues, UseFormRegisterReturn, UseFormResetField } from 'react-hook-form';
-
-import InputWrapper from '../input_wrapper';
+import type {
+    FieldValues,
+    Path,
+    UseFormGetValues,
+    UseFormResetField,
+    UseFormWatch,
+} from 'react-hook-form';
 
 import { useSelectDateHook } from './hooks';
 
-import { PlainSelect, type IProps as ISelectProps } from '@/components/select';
+import Select, { type IProps as ISelectProps } from '@/components/select';
 
-// only use with react-hook-form
-export interface IProps extends Pick<ISelectProps, 'label' | 'message' | 'error'> {
-    dayForm: UseFormRegisterReturn; // required
-    monthForm: UseFormRegisterReturn; // required
-    yearForm: UseFormRegisterReturn; // required
+export interface IProps<T> extends Pick<ISelectProps, 'control' | 'rules' | 'error'> {
+    dayName: Path<T>; // required
+    monthName: Path<T>; // required
+    yearName: Path<T>; // required
     startYear?: number;
     endYear?: number;
     locale?: 'en' | 'th';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    getValues: UseFormGetValues<any>;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resetField: UseFormResetField<any>;
+    watch: UseFormWatch<T>; // required
+    getValues: UseFormGetValues<T>; // required
+    resetField: UseFormResetField<T>; // required
 }
 
-const SelectDate: React.FC<IProps> = ({
-    dayForm,
-    monthForm,
-    yearForm,
+// can use only with "react-hook-form"
+const SelectDate = <T extends FieldValues>({
+    dayName,
+    monthName,
+    yearName,
+    control,
+    rules,
     startYear,
     endYear,
     locale = 'en',
-    label,
-    message,
     error,
+    watch,
     getValues,
     resetField,
-}) => {
-    const { days, months, years, handleMonthChange, handleYearChange } = useSelectDateHook({
-        dayForm,
-        monthForm,
-        yearForm,
+}: IProps<T>): React.ReactElement => {
+    const { days, months, years } = useSelectDateHook({
+        dayName,
+        monthName,
+        yearName,
         startYear,
         endYear,
         locale,
+        watch,
         getValues,
         resetField,
     });
 
     return (
-        <InputWrapper label={label} message={message}>
-            <div className="grid grid-cols-3 gap-3 align-bottom">
-                <PlainSelect
-                    form={dayForm}
-                    options={days}
-                    error={error}
-                    placeholder={locale === 'en' ? 'date' : 'วัน'}
-                />
+        <div className="grid grid-cols-3 gap-3 align-bottom">
+            <Select
+                name={dayName}
+                control={control}
+                rules={rules}
+                options={days}
+                error={error}
+                placeholder={locale === 'en' ? 'date' : 'วัน'}
+            />
 
-                <PlainSelect
-                    form={{
-                        ...monthForm,
-                        onChange: handleMonthChange,
-                    }}
-                    options={months}
-                    error={error}
-                    placeholder={locale === 'en' ? 'month' : 'เดือน'}
-                />
+            <Select
+                name={monthName}
+                control={control}
+                rules={rules}
+                options={months}
+                error={error}
+                placeholder={locale === 'en' ? 'month' : 'เดือน'}
+            />
 
-                <PlainSelect
-                    form={{
-                        ...yearForm,
-                        onChange: handleYearChange,
-                    }}
-                    options={years}
-                    error={error}
-                    placeholder={locale === 'en' ? 'year' : 'ปี'}
-                />
-            </div>
-        </InputWrapper>
+            <Select
+                name={yearName}
+                control={control}
+                rules={rules}
+                options={years}
+                error={error}
+                placeholder={locale === 'en' ? 'year' : 'ปี'}
+            />
+        </div>
     );
 };
 

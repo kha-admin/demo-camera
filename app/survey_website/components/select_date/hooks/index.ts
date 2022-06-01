@@ -1,19 +1,21 @@
 import { getDaysInMonth } from 'date-fns';
-import { useState } from 'react';
-import { type ChangeHandler } from 'react-hook-form';
+import { isNumber } from 'lodash-es';
+import { useEffect, useState } from 'react';
+import { type FieldValues } from 'react-hook-form';
 
 import { type IProps } from '../index';
 
 import { type IOption } from '@/components/select';
 
-export type IUseSelectDateHookParams = Pick<
-    IProps,
-    | 'dayForm'
-    | 'monthForm'
-    | 'yearForm'
+export type IUseSelectDateHookParams<T extends FieldValues> = Pick<
+    IProps<T>,
+    | 'dayName'
+    | 'monthName'
+    | 'yearName'
     | 'startYear'
     | 'endYear'
     | 'locale'
+    | 'watch'
     | 'getValues'
     | 'resetField'
 >;
@@ -22,8 +24,6 @@ export interface IUseSelectDateHookResult {
     days: IOption[];
     months: IOption[];
     years: IOption[];
-    handleMonthChange: ChangeHandler;
-    handleYearChange: ChangeHandler;
 }
 
 const enMonths = [
@@ -56,14 +56,17 @@ const thMonths = [
     'ธันวาคม',
 ];
 
-function useSelectDateHook(params: IUseSelectDateHookParams): IUseSelectDateHookResult {
+function useSelectDateHook<T extends FieldValues>(
+    params: IUseSelectDateHookParams<T>,
+): IUseSelectDateHookResult {
     const {
-        dayForm,
-        monthForm,
-        yearForm,
+        dayName,
+        monthName,
+        yearName,
         startYear,
         endYear,
         locale = 'en',
+        watch,
         getValues,
         resetField,
     } = params;
@@ -93,10 +96,10 @@ function useSelectDateHook(params: IUseSelectDateHookParams): IUseSelectDateHook
     };
 
     const days = generateArrayRange(dayRange[0], dayRange[1]).map(
-        (item): IOption => ({ text: String(item), value: item }),
+        (item): IOption => ({ label: String(item), value: item }),
     );
 
-    const getMonths = (locale: IProps['locale']): Array<string> => {
+    const getMonths = (locale: IProps<T>['locale']): Array<string> => {
         switch (locale) {
             case 'en':
                 return enMonths;
@@ -109,54 +112,37 @@ function useSelectDateHook(params: IUseSelectDateHookParams): IUseSelectDateHook
         }
     };
 
-    const months = getMonths(locale).map((item, index): IOption => ({ text: item, value: index }));
+    const months = getMonths(locale).map((item, index): IOption => ({ label: item, value: index }));
 
     const years = generateArrayRange(yearRange[0], yearRange[1])
         .sort((a, b) => b - a)
-        .map((item): IOption => ({ text: String(item), value: item }));
+        .map((item): IOption => ({ label: String(item), value: item }));
 
     const resetDay = (): void => {
-        resetField(dayForm.name, { keepError: true });
+        resetField(dayName, { defaultValue: null, keepError: true }); // should reset to null for rendering select
     };
 
-    const handleMonthChange: ChangeHandler = async (e) => {
-        if (!e.target.value) {
-            return monthForm.onChange(e);
-        }
-
-        resetDay();
-
-        const daysInMonth = getDaysInMonth(
-            new Date(getValues(yearForm.name) || today.getFullYear(), e.target.value),
-        );
+    const updateDayRange = (year: number, month: number): void => {
+        const daysInMonth = getDaysInMonth(new Date(year, month));
 
         setDayRange((prev) => [prev[0], daysInMonth]);
-
-        return monthForm.onChange(e);
     };
 
-    const handleYearChange: ChangeHandler = async (e) => {
-        if (!e.target.value) {
-            return yearForm.onChange(e);
-        }
+    useEffect(() => {
+        const year: IOption | undefined | null = getValues(yearName);
+        const month: IOption | undefined | null = getValues(monthName);
 
         resetDay();
-
-        const daysInMonth = getDaysInMonth(
-            new Date(e.target.value, getValues(monthForm.name) || today.getMonth()),
+        updateDayRange(
+            year && isNumber(year?.value) ? year.value : today.getFullYear(),
+            month && isNumber(month?.value) ? month.value : today.getMonth(),
         );
-
-        setDayRange((prev) => [prev[0], daysInMonth]);
-
-        return yearForm.onChange(e);
-    };
+    }, [watch(yearName), watch(monthName)]);
 
     return {
         days,
         months,
         years,
-        handleMonthChange,
-        handleYearChange,
     };
 }
 
