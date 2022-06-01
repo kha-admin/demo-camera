@@ -1,11 +1,18 @@
-import React from 'react';
-import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
+import React, { useEffect } from 'react';
+import type {
+    Control,
+    FieldErrors,
+    UseFormRegister,
+    UseFormResetField,
+    UseFormWatch,
+} from 'react-hook-form';
 
 import { type IFormFieldValues } from '../../hooks';
 
 import Input from '@/components/input';
 import InputWrapper from '@/components/input_wrapper';
 import Select from '@/components/select';
+import SelectDistrict from '@/components/select_district';
 import SelectProvince from '@/components/select_province';
 import Textarea from '@/components/textarea';
 
@@ -14,9 +21,18 @@ export interface IProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     control: Control<IFormFieldValues, any>;
     register: UseFormRegister<IFormFieldValues>;
+    watch: UseFormWatch<IFormFieldValues>;
+    resetField: UseFormResetField<IFormFieldValues>;
 }
 
-const FormStep3: React.FC<IProps> = ({ errors, control, register }) => {
+const FormStep3: React.FC<IProps> = ({ errors, control, register, watch, resetField }) => {
+    const watchProvince = watch('province');
+
+    useEffect(() => {
+        resetField('district', { defaultValue: null, keepError: true });
+        resetField('subDistrict', { defaultValue: null, keepError: true });
+    }, [watchProvince]);
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
             {/* left */}
@@ -50,11 +66,12 @@ const FormStep3: React.FC<IProps> = ({ errors, control, register }) => {
                 </InputWrapper>
 
                 <InputWrapper label={'อำเภอ/เขต'}>
-                    <Select
+                    <SelectDistrict
+                        provinceId={watchProvince?.value || undefined}
                         name={'district'}
                         control={control}
                         rules={{ required: true }}
-                        options={[]}
+                        locale={'th'}
                         error={!!errors['district']}
                     />
                 </InputWrapper>

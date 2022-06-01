@@ -56,6 +56,8 @@ const SurveyForm: React.FC = () => {
                                         errors={errors}
                                         control={control}
                                         register={register}
+                                        watch={watch}
+                                        resetField={resetField}
                                     />
                                 )}
 
