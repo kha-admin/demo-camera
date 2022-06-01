@@ -1,86 +1,65 @@
 import React from 'react';
-import { type UseFormRegisterReturn } from 'react-hook-form';
-
-import InputWrapper from '../input_wrapper';
+import { Controller, type Control, type UseControllerProps } from 'react-hook-form';
+import ReactSelect, { type Options } from 'react-select';
 
 export interface IOption {
+    label: string;
     value: string | number;
-    text: string;
 }
+
+export type IValue = IOption;
 
 export interface IProps {
-    value?: IOption['value'];
-    form?: Partial<UseFormRegisterReturn>;
-    options?: Array<IOption>;
-    label?: string;
+    name: string;
+    control: Control<any, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+    rules?: UseControllerProps['rules'];
+    options?: Options<IOption>;
     placeholder?: string;
-    message?: string;
+    multiple?: boolean;
+    clearable?: boolean;
     disabled?: boolean;
-    ghost?: boolean; // no background
-    success?: boolean; // success color
     error?: boolean; // error color
-    noDataText?: string;
-    clearText?: string;
-    handleClear?: React.Dispatch<unknown>;
-    onChange?: React.ChangeEventHandler<HTMLSelectElement>;
 }
 
-// no style
-export const PlainSelect: React.FC<
-    Omit<IProps, 'label' | 'message' | 'clearText' | 'handleClear'>
-> = ({
-    form,
+// can use only with "react-hook-form"
+const Select: React.FC<IProps> = ({
+    name,
+    control,
+    rules,
     options = [],
-    placeholder,
-    disabled,
-    ghost,
-    success,
-    error,
-    noDataText,
-    ...props
+    placeholder = '',
+    multiple = false,
+    clearable = false,
+    disabled = false,
+    error = false,
 }) => {
     return (
-        <select
-            {...form}
-            {...props} // if send "value" prop will bug with "defaultValue" but still need to use "value" prop
-            defaultValue={props.value === undefined ? '' : undefined}
-            disabled={disabled}
-            className={[
-                'select w-full',
-                ghost ? 'select-ghost' : 'select-bordered',
-                success ? 'select-success' : '',
-                error ? 'select-error' : '',
-            ].join(' ')}
-        >
-            {options.length === 0 ? (
-                <option value={''} disabled>
-                    {noDataText || 'No data'}
-                </option>
-            ) : (
-                <option value={''} disabled>
-                    {placeholder || 'Pick one'}
-                </option>
-            )}
-
-            {options.map((item, index) => (
-                <option key={index} value={item.value}>
-                    {item.text}
-                </option>
-            ))}
-        </select>
-    );
-};
-
-const Select: React.FC<IProps> = ({ label, message, clearText, handleClear, ...props }) => {
-    return (
-        <InputWrapper
-            label={label}
-            message={message}
-            clearText={clearText}
-            handleClear={handleClear}
-        >
-            <PlainSelect {...props} />
-        </InputWrapper>
+        <Controller
+            name={name}
+            control={control}
+            rules={rules}
+            render={({ field }) => {
+                return (
+                    <ReactSelect
+                        {...field}
+                        options={options}
+                        instanceId={`${name}-select`}
+                        placeholder={placeholder}
+                        isMulti={multiple}
+                        isClearable={clearable}
+                        isDisabled={disabled}
+                        styles={{
+                            control: (base) => ({
+                                ...base,
+                                height: '48px',
+                                borderRadius: '8px',
+                                borderColor: error ? 'red !important' : base.borderColor,
+                            }),
+                        }}
+                    />
+                );
+            }}
+        />
     );
 };
 
