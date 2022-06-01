@@ -3,38 +3,33 @@ import React from 'react';
 export interface IProps {
     label?: string;
     message?: string;
-    clearText?: string;
-    handleClear?: React.Dispatch<unknown>;
+    success?: boolean; // success color
+    error?: boolean; // error color
 }
 
-const InputWrapper: React.FC<IProps> = ({ children, label, message, clearText, handleClear }) => {
+const InputWrapper: React.FC<IProps> = ({ children, label, message, success, error }) => {
     return (
-        <div>
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text" style={{ height: '20px' }}>
-                        {label}
-                    </span>
-                </label>
+        <div className="form-control">
+            <label className="label">
+                <span className="label-text" style={{ height: '20px' }}>
+                    {label}
+                </span>
+            </label>
 
-                {children}
+            {children}
 
-                <label className="label">
-                    <span className="label-text-alt text-base-300" style={{ height: '16px' }}>
-                        {message}
-                    </span>
-
-                    {!!handleClear && (
-                        <span
-                            className="label-text-alt text-base-300 underline cursor-pointer"
-                            style={{ height: '16px' }}
-                            onClick={handleClear}
-                        >
-                            {clearText || 'Clear'}
-                        </span>
-                    )}
-                </label>
-            </div>
+            <label className="label">
+                <span
+                    className={[
+                        'label-text-alt text-base-300',
+                        success ? 'text-green-500' : '',
+                        error ? 'text-red-500' : '',
+                    ].join(' ')}
+                    style={{ height: '16px' }}
+                >
+                    {message}
+                </span>
+            </label>
         </div>
     );
 };
