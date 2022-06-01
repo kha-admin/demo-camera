@@ -3,7 +3,7 @@ import { type UseFormRegisterReturn } from 'react-hook-form';
 
 export interface IOption {
     text: string;
-    value: string;
+    value: string | number;
 }
 
 export interface IProps {
