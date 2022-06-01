@@ -12,6 +12,7 @@ import type {
 } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
+import { IOption } from '@/components/select';
 import { type IProps as IStepsProps } from '@/components/steps';
 
 export interface IFormFieldValues {
@@ -20,20 +21,20 @@ export interface IFormFieldValues {
     gender: string;
     firstName: string;
     lastName: string;
-    birthDate: number;
-    birthMonth: number;
-    birthYear: number;
+    birthDate: IOption<number | null>;
+    birthMonth: IOption<number | null>;
+    birthYear: IOption<number | null>;
     email: string;
     preferContactChannel: string;
-    maritalStatusId: number;
-    occupationId: number;
-    faceImageUploadPath: string;
-    idCardImageUploadPath: string;
+    maritalStatus: number;
+    occupation: number;
+    faceImageUploadPath: FileList;
+    idCardImageUploadPath: FileList;
     address1: string;
     addressBuilding: string;
-    provinceId: number;
-    districtId: number;
-    subDistrictId: number;
+    province: IOption<number | null>;
+    district: IOption<number | null>;
+    subDistrict: IOption<number | null>;
     addressRoom: string;
     addressAlley: string;
     addressStreet: string;
