@@ -6,6 +6,7 @@ import { type IFormFieldValues } from '../../hooks';
 import Input from '@/components/input';
 import InputWrapper from '@/components/input_wrapper';
 import Select from '@/components/select';
+import SelectProvince from '@/components/select_province';
 import Textarea from '@/components/textarea';
 
 export interface IProps {
@@ -39,32 +40,32 @@ const FormStep3: React.FC<IProps> = ({ errors, control, register }) => {
                 </InputWrapper>
 
                 <InputWrapper label={'จังหวัด'}>
-                    <Select
-                        name={'provinceId'}
+                    <SelectProvince
+                        name={'province'}
                         control={control}
                         rules={{ required: true }}
-                        options={[]}
-                        error={!!errors['provinceId']}
+                        locale={'th'}
+                        error={!!errors['province']}
                     />
                 </InputWrapper>
 
                 <InputWrapper label={'อำเภอ/เขต'}>
                     <Select
-                        name={'districtId'}
+                        name={'district'}
                         control={control}
                         rules={{ required: true }}
                         options={[]}
-                        error={!!errors['districtId']}
+                        error={!!errors['district']}
                     />
                 </InputWrapper>
 
                 <InputWrapper label={'ตำบล/แขวง'}>
                     <Select
-                        name={'subDistrictId'}
+                        name={'subDistrict'}
                         control={control}
                         rules={{ required: true }}
                         options={[]}
-                        error={!!errors['subDistrictId']}
+                        error={!!errors['subDistrict']}
                     />
                 </InputWrapper>
             </div>

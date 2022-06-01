@@ -118,21 +118,21 @@ const FormStep2: React.FC<IProps> = ({
 
                 <InputWrapper label={'สถานะ'}>
                     <Select
-                        name={'maritalStatusId'}
+                        name={'maritalStatus'}
                         control={control}
                         rules={{ required: true }}
                         options={[]}
-                        error={!!errors['maritalStatusId']}
+                        error={!!errors['maritalStatus']}
                     />
                 </InputWrapper>
 
                 <InputWrapper label={'อาชีพ'}>
                     <Select
-                        name={'occupationId'}
+                        name={'occupation'}
                         control={control}
                         rules={{ required: true }}
                         options={[]}
-                        error={!!errors['occupationId']}
+                        error={!!errors['occupation']}
                     />
                 </InputWrapper>
             </div>
