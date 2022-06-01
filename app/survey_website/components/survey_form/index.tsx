@@ -12,8 +12,10 @@ const SurveyForm: React.FC = () => {
         steps,
         current,
         errors,
+        control,
         setCurrent,
         register,
+        watch,
         getValues,
         resetField,
         handleSubmit,
@@ -29,7 +31,7 @@ const SurveyForm: React.FC = () => {
                     current={current}
                     setCurrent={setCurrent}
                 >
-                    <div className="card w-full bg-base-100 shadow-xl">
+                    <div className="w-full bg-base-100 rounded-lg shadow-xl">
                         <div className="card-body">
                             {/* card-title */}
                             <h2 className="card-title">{steps[current]?.title}</h2>
@@ -41,13 +43,21 @@ const SurveyForm: React.FC = () => {
                                 {current === 1 && (
                                     <FormStep2
                                         errors={errors}
+                                        control={control}
                                         register={register}
+                                        watch={watch}
                                         getValues={getValues}
                                         resetField={resetField}
                                     />
                                 )}
 
-                                {current === 2 && <FormStep3 errors={errors} register={register} />}
+                                {current === 2 && (
+                                    <FormStep3
+                                        errors={errors}
+                                        control={control}
+                                        register={register}
+                                    />
+                                )}
 
                                 {/* card-action */}
                                 <div className="card-actions justify-center">

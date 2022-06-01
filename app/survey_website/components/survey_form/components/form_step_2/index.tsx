@@ -1,130 +1,161 @@
 import React from 'react';
 import type {
+    Control,
     FieldErrors,
     UseFormGetValues,
     UseFormRegister,
     UseFormResetField,
+    UseFormWatch,
 } from 'react-hook-form';
 
 import { type IFormFieldValues } from '../../hooks';
 
-import ButtonGroupContact from '@/components/button_group_contact';
-import ButtonGroupGender from '@/components/button_group_gender';
+import ButtonGroup from '@/components/button_group';
 import Input from '@/components/input';
-import InputFile from '@/components/input_file';
+import InputWrapper from '@/components/input_wrapper';
 import Select from '@/components/select';
 import SelectDate from '@/components/select_date';
 import { regexEmail } from '@/utils/regex';
 
 export interface IProps {
     errors: FieldErrors<IFormFieldValues>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    control: Control<IFormFieldValues, any>;
     register: UseFormRegister<IFormFieldValues>;
+    watch: UseFormWatch<IFormFieldValues>;
     getValues: UseFormGetValues<IFormFieldValues>;
     resetField: UseFormResetField<IFormFieldValues>;
 }
 
-const FormStep2: React.FC<IProps> = ({ errors, register, getValues, resetField }) => {
+const FormStep2: React.FC<IProps> = ({
+    errors,
+    control,
+    register,
+    watch,
+    getValues,
+    resetField,
+}) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
             {/* left */}
             <div>
-                <ButtonGroupGender
-                    form={register('gender', {
-                        required: true,
-                    })}
-                    label={'เพศ'}
-                    error={!!errors['gender']}
-                />
+                <InputWrapper label={'เพศ'}>
+                    <ButtonGroup
+                        form={register('gender', {
+                            required: true,
+                        })}
+                        options={[
+                            { text: 'เพศชาย', value: 'man' },
+                            { text: 'เพศหญิง', value: 'woman' },
+                        ]}
+                        error={!!errors['gender']}
+                    />
+                </InputWrapper>
 
-                <Input
-                    form={register('firstName', {
-                        required: true,
-                    })}
-                    label={'ชื่อจริง'}
-                    error={!!errors['firstName']}
-                />
+                <InputWrapper label={'ชื่อจริง'}>
+                    <Input
+                        form={register('firstName', {
+                            required: true,
+                        })}
+                        error={!!errors['firstName']}
+                    />
+                </InputWrapper>
 
-                <Input
-                    form={register('lastName', {
-                        required: true,
-                    })}
-                    label={'นามสกุล'}
-                    error={!!errors['lastName']}
-                />
+                <InputWrapper label={'นามสกุล'}>
+                    <Input
+                        form={register('lastName', {
+                            required: true,
+                        })}
+                        error={!!errors['lastName']}
+                    />
+                </InputWrapper>
 
-                <SelectDate
-                    dayForm={register('birthDate', {
-                        required: true,
-                    })}
-                    monthForm={register('birthMonth', {
-                        required: true,
-                    })}
-                    yearForm={register('birthYear', {
-                        required: true,
-                    })}
-                    label={'วันเกิดตามบัตรประชาชน'}
-                    locale={'th'}
-                    startYear={new Date().getFullYear() - 120}
-                    endYear={new Date().getFullYear()}
-                    error={!!errors['birthDate'] || !!errors['birthMonth'] || !!errors['birthYear']}
-                    getValues={getValues}
-                    resetField={resetField}
-                />
+                <InputWrapper label={'วันเกิดตามบัตรประชาชน'}>
+                    <SelectDate<IFormFieldValues>
+                        dayName={'birthDate'}
+                        monthName={'birthMonth'}
+                        yearName={'birthYear'}
+                        control={control}
+                        rules={{ required: true }}
+                        locale={'th'}
+                        startYear={new Date().getFullYear() - 120}
+                        endYear={new Date().getFullYear()}
+                        error={
+                            !!errors['birthDate'] || !!errors['birthMonth'] || !!errors['birthYear']
+                        }
+                        watch={watch}
+                        getValues={getValues}
+                        resetField={resetField}
+                    />
+                </InputWrapper>
             </div>
 
             {/* right */}
             <div>
-                <Input
-                    form={register('email', {
-                        required: true,
-                        pattern: regexEmail,
-                    })}
-                    label={'อีเมล'}
-                    message={'ตัวอย่าง demo@kha.co.th'}
-                    type={'email'}
-                    error={!!errors['email']}
-                />
+                <InputWrapper label={'อีเมล'} message={'ตัวอย่าง demo@kha.co.th'}>
+                    <Input
+                        form={register('email', {
+                            required: true,
+                            pattern: regexEmail,
+                        })}
+                        type={'email'}
+                        error={!!errors['email']}
+                    />
+                </InputWrapper>
 
-                <ButtonGroupContact
-                    form={register('preferContactChannel', {
-                        required: true,
-                    })}
-                    label={'ช่องทางสะดวกให้ติดต่อ'}
-                    error={!!errors['preferContactChannel']}
-                />
+                <InputWrapper label={'ช่องทางสะดวกให้ติดต่อ'}>
+                    <ButtonGroup
+                        form={register('preferContactChannel', {
+                            required: true,
+                        })}
+                        options={[
+                            { text: 'โทรศัพท์มือถือ', value: 'phone' },
+                            { text: 'อีเมล', value: 'email' },
+                        ]}
+                        error={!!errors['preferContactChannel']}
+                    />
+                </InputWrapper>
 
-                <Select
-                    form={register('maritalStatusId', {
-                        required: true,
-                    })}
-                    options={[]}
-                    label={'สถานะ'}
-                    error={!!errors['maritalStatusId']}
-                />
+                <InputWrapper label={'สถานะ'}>
+                    <Select
+                        name={'maritalStatusId'}
+                        control={control}
+                        rules={{ required: true }}
+                        options={[]}
+                        error={!!errors['maritalStatusId']}
+                    />
+                </InputWrapper>
 
-                <Select
-                    form={register('occupationId', {
-                        required: true,
-                    })}
-                    options={[]}
-                    label={'อาชีพ'}
-                    error={!!errors['occupationId']}
-                />
+                <InputWrapper label={'อาชีพ'}>
+                    <Select
+                        name={'occupationId'}
+                        control={control}
+                        rules={{ required: true }}
+                        options={[]}
+                        error={!!errors['occupationId']}
+                    />
+                </InputWrapper>
             </div>
 
-            <InputFile
-                form={register('faceImageUploadPath', {
-                    required: true,
-                })}
-                label={'ถ่ายรูปหน้า (ไม่สวมหมวก ไม่สวมแว่นดำ)'}
-                error={!!errors['faceImageUploadPath']}
-            />
+            <InputWrapper label={'ถ่ายรูปหน้า (ไม่สวมหมวก ไม่สวมแว่นดำ)'}>
+                <Input
+                    form={register('faceImageUploadPath', {
+                        required: true,
+                    })}
+                    type={'file'}
+                    error={!!errors['faceImageUploadPath']}
+                    ghost
+                />
+            </InputWrapper>
 
-            <InputFile
-                form={register('idCardImageUploadPath')}
-                label={'ถ่ายรูปหน้าบัตรประชาชน'}
-                error={!!errors['idCardImageUploadPath']}
-            />
+            <InputWrapper label={'ถ่ายรูปหน้าบัตรประชาชน'}>
+                <Input
+                    form={register('idCardImageUploadPath')}
+                    type={'file'}
+                    error={!!errors['idCardImageUploadPath']}
+                    ghost
+                />
+            </InputWrapper>
         </div>
     );
 };

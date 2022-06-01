@@ -1,99 +1,111 @@
 import React from 'react';
-import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import { type IFormFieldValues } from '../../hooks';
 
-import Textarea from '@/components/Textarea';
 import Input from '@/components/input';
+import InputWrapper from '@/components/input_wrapper';
 import Select from '@/components/select';
+import Textarea from '@/components/textarea';
 
 export interface IProps {
     errors: FieldErrors<IFormFieldValues>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    control: Control<IFormFieldValues, any>;
     register: UseFormRegister<IFormFieldValues>;
 }
 
-const FormStep3: React.FC<IProps> = ({ errors, register }) => {
+const FormStep3: React.FC<IProps> = ({ errors, control, register }) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
             {/* left */}
             <div>
-                <Input
-                    form={register('address1', {
-                        required: true,
-                    })}
-                    label={'บ้านเลขที่'}
-                    error={!!errors['address1']}
-                />
+                <InputWrapper label={'บ้านเลขที่'}>
+                    <Input
+                        form={register('address1', {
+                            required: true,
+                        })}
+                        error={!!errors['address1']}
+                    />
+                </InputWrapper>
 
-                <Input
-                    form={register('addressBuilding', {
-                        required: true,
-                    })}
-                    label={'อาคาร'}
-                    error={!!errors['addressBuilding']}
-                />
+                <InputWrapper label={'อาคาร'}>
+                    <Input
+                        form={register('addressBuilding', {
+                            required: true,
+                        })}
+                        error={!!errors['addressBuilding']}
+                    />
+                </InputWrapper>
 
-                <Select
-                    form={register('provinceId', {
-                        required: true,
-                    })}
-                    options={[]}
-                    label={'จังหวัด'}
-                    error={!!errors['provinceId']}
-                />
+                <InputWrapper label={'จังหวัด'}>
+                    <Select
+                        name={'provinceId'}
+                        control={control}
+                        rules={{ required: true }}
+                        options={[]}
+                        error={!!errors['provinceId']}
+                    />
+                </InputWrapper>
 
-                <Select
-                    form={register('districtId', {
-                        required: true,
-                    })}
-                    options={[]}
-                    label={'อำเภอ/เขต'}
-                    error={!!errors['districtId']}
-                />
+                <InputWrapper label={'อำเภอ/เขต'}>
+                    <Select
+                        name={'districtId'}
+                        control={control}
+                        rules={{ required: true }}
+                        options={[]}
+                        error={!!errors['districtId']}
+                    />
+                </InputWrapper>
 
-                <Select
-                    form={register('subDistrictId', {
-                        required: true,
-                    })}
-                    options={[]}
-                    label={'ตำบล/แขวง'}
-                    error={!!errors['subDistrictId']}
-                />
+                <InputWrapper label={'ตำบล/แขวง'}>
+                    <Select
+                        name={'subDistrictId'}
+                        control={control}
+                        rules={{ required: true }}
+                        options={[]}
+                        error={!!errors['subDistrictId']}
+                    />
+                </InputWrapper>
             </div>
 
             {/* right */}
             <div>
-                <Input
-                    form={register('addressRoom', {
-                        required: true,
-                    })}
-                    label={'ห้อง'}
-                    error={!!errors['addressRoom']}
-                />
+                <InputWrapper label={'ห้อง'}>
+                    <Input
+                        form={register('addressRoom', {
+                            required: true,
+                        })}
+                        error={!!errors['addressRoom']}
+                    />
+                </InputWrapper>
 
-                <Input
-                    form={register('addressAlley', {
-                        required: true,
-                    })}
-                    label={'ซอย'}
-                    error={!!errors['addressAlley']}
-                />
+                <InputWrapper label={'ซอย'}>
+                    <Input
+                        form={register('addressAlley', {
+                            required: true,
+                        })}
+                        error={!!errors['addressAlley']}
+                    />
+                </InputWrapper>
 
-                <Input
-                    form={register('addressStreet', {
-                        required: true,
-                    })}
-                    label={'ถนน'}
-                    error={!!errors['addressStreet']}
-                />
+                <InputWrapper label={'ถนน'}>
+                    <Input
+                        form={register('addressStreet', {
+                            required: true,
+                        })}
+                        error={!!errors['addressStreet']}
+                    />
+                </InputWrapper>
 
-                <Textarea
-                    form={register('addressMemo', {
-                        required: true,
-                    })}
-                    label={'คำอธิบาย (หมายเหตุ)'}
-                    error={!!errors['addressMemo']}
-                />
+                <InputWrapper label={'คำอธิบาย (หมายเหตุ)'}>
+                    <Textarea
+                        form={register('addressMemo', {
+                            required: true,
+                        })}
+                        error={!!errors['addressMemo']}
+                    />
+                </InputWrapper>
             </div>
         </div>
     );

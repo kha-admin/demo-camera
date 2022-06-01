@@ -4,6 +4,7 @@ import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { type IFormFieldValues } from '../../hooks';
 
 import Input from '@/components/input';
+import InputWrapper from '@/components/input_wrapper';
 import { isValidThaiPid } from '@/utils/pid';
 import { regexThPhoneNumber } from '@/utils/regex';
 
@@ -21,31 +22,34 @@ const FormStep1: React.FC<IProps> = ({ errors, register }) => {
             </p>
 
             <div className="w-full md:w-1/2">
-                <Input
-                    form={register('phoneNumber', {
-                        required: true,
-                        pattern: regexThPhoneNumber,
-                        minLength: 10,
-                        maxLength: 10,
-                    })}
-                    label={'หมายเลขโทรศัพท์มือถือ'}
-                    message={'ตัวอย่าง 099-000-1234'}
-                    type={'number'}
-                    error={!!errors['phoneNumber']}
-                />
+                <InputWrapper label={'หมายเลขโทรศัพท์มือถือ'} message={'ตัวอย่าง 099-000-1234'}>
+                    <Input
+                        form={register('phoneNumber', {
+                            required: true,
+                            pattern: regexThPhoneNumber,
+                            minLength: 10,
+                            maxLength: 10,
+                        })}
+                        type={'number'}
+                        error={!!errors['phoneNumber']}
+                    />
+                </InputWrapper>
 
-                <Input
-                    form={register('pid', {
-                        required: true,
-                        validate: (value) => isValidThaiPid(value),
-                        minLength: 13,
-                        maxLength: 13,
-                    })}
+                <InputWrapper
                     label={'หมายเลขประจำตัวประชาชน'}
                     message={'ตัวอย่าง 3-1111-11111-11-9'}
-                    type={'number'}
-                    error={!!errors['pid']}
-                />
+                >
+                    <Input
+                        form={register('pid', {
+                            required: true,
+                            validate: (value) => isValidThaiPid(value),
+                            minLength: 13,
+                            maxLength: 13,
+                        })}
+                        type={'number'}
+                        error={!!errors['pid']}
+                    />
+                </InputWrapper>
             </div>
         </div>
     );

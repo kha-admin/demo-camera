@@ -7,6 +7,8 @@ import type {
     UseFormResetField,
     UseFormGetValues,
     FieldErrors,
+    Control,
+    UseFormWatch,
 } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -42,8 +44,10 @@ export interface IUseSurveyFormHookResult {
     steps: IStepsProps['steps'];
     current: number;
     errors: FieldErrors<IFormFieldValues>;
+    control: Control<IFormFieldValues, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
     setCurrent: React.Dispatch<React.SetStateAction<number>>;
     register: UseFormRegister<IFormFieldValues>;
+    watch: UseFormWatch<IFormFieldValues>;
     getValues: UseFormGetValues<IFormFieldValues>;
     resetField: UseFormResetField<IFormFieldValues>;
     handleSubmit: UseFormHandleSubmit<IFormFieldValues>;
@@ -59,7 +63,9 @@ function useSurveyFormHook(): IUseSurveyFormHookResult {
 
     const {
         formState: { errors },
+        control,
         register,
+        watch,
         getValues,
         resetField,
         handleSubmit,
@@ -81,8 +87,10 @@ function useSurveyFormHook(): IUseSurveyFormHookResult {
         steps,
         current,
         errors,
+        control,
         setCurrent,
         register,
+        watch,
         getValues,
         resetField,
         handleSubmit,
