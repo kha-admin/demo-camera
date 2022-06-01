@@ -10,8 +10,9 @@ export interface IOption {
 export type IValue = IOption;
 
 export interface IProps {
-    name: string;
-    control: Control<any, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+    name: string; // required
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    control: Control<any, any>; // required
     rules?: UseControllerProps['rules'];
     options?: Options<IOption>;
     placeholder?: string;
