@@ -11,9 +11,9 @@ import { type IFormFieldValues } from '../../hooks';
 
 import Input from '@/components/input';
 import InputWrapper from '@/components/input_wrapper';
-import Select from '@/components/select';
 import SelectDistrict from '@/components/select_district';
 import SelectProvince from '@/components/select_province';
+import SelectSubdistrict from '@/components/select_subdistrict';
 import Textarea from '@/components/textarea';
 
 export interface IProps {
@@ -26,12 +26,17 @@ export interface IProps {
 }
 
 const FormStep3: React.FC<IProps> = ({ errors, control, register, watch, resetField }) => {
-    const watchProvince = watch('province');
+    const province = watch('province');
+    const district = watch('district');
 
     useEffect(() => {
         resetField('district', { defaultValue: null, keepError: true });
         resetField('subDistrict', { defaultValue: null, keepError: true });
-    }, [watchProvince]);
+    }, [province]);
+
+    useEffect(() => {
+        resetField('subDistrict', { defaultValue: null, keepError: true });
+    }, [district]);
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
@@ -67,7 +72,7 @@ const FormStep3: React.FC<IProps> = ({ errors, control, register, watch, resetFi
 
                 <InputWrapper label={'อำเภอ/เขต'}>
                     <SelectDistrict
-                        provinceId={watchProvince?.value || undefined}
+                        provinceId={province?.value}
                         name={'district'}
                         control={control}
                         rules={{ required: true }}
@@ -77,11 +82,13 @@ const FormStep3: React.FC<IProps> = ({ errors, control, register, watch, resetFi
                 </InputWrapper>
 
                 <InputWrapper label={'ตำบล/แขวง'}>
-                    <Select
+                    <SelectSubdistrict
+                        provinceId={province?.value}
+                        districtId={district?.value}
                         name={'subDistrict'}
                         control={control}
                         rules={{ required: true }}
-                        options={[]}
+                        locale={'th'}
                         error={!!errors['subDistrict']}
                     />
                 </InputWrapper>
