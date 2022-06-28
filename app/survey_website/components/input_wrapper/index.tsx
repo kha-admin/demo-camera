@@ -3,11 +3,10 @@ import React from 'react';
 export interface IProps {
     label?: React.ReactNode;
     message?: React.ReactNode;
-    success?: boolean; // success color
-    error?: boolean; // error color
+    subMessage?: React.ReactNode;
 }
 
-const InputWrapper: React.FC<IProps> = ({ children, label, message, success, error }) => {
+const InputWrapper: React.FC<IProps> = ({ children, label, message, subMessage }) => {
     return (
         <div className="form-control">
             <label className="label">
@@ -17,15 +16,8 @@ const InputWrapper: React.FC<IProps> = ({ children, label, message, success, err
             {children}
 
             <label className="label">
-                <span
-                    className={[
-                        'label-text-alt text-base-300 h-[16px]',
-                        success ? 'text-green-500' : '',
-                        error ? 'text-red-500' : '',
-                    ].join(' ')}
-                >
-                    {message}
-                </span>
+                <span className={'label-text-alt text-base-300 h-[16px]'}>{message}</span>
+                <span className={'label-text-alt text-base-300 h-[16px]'}>{subMessage}</span>
             </label>
         </div>
     );
