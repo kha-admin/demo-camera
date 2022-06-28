@@ -8,7 +8,7 @@ interface IProps {
     children: React.ReactNode;
 }
 
-const LiveLayout: React.FC<IProps> = ({ className, children, bgEffect }) => {
+const Live: React.FC<IProps> = ({ className, children, bgEffect }) => {
     return (
         <div className={className || 'h-full w-full'}>
             {children}
@@ -23,4 +23,4 @@ const LiveLayout: React.FC<IProps> = ({ className, children, bgEffect }) => {
     );
 };
 
-export default LiveLayout;
+export default Live;
