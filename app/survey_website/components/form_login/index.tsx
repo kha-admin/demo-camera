@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 
 import Input from '@/components/input';
@@ -10,7 +10,9 @@ export interface IForm {
     password: string;
 }
 
-const LoginForm: React.FC = () => {
+const FormLogin: React.FC = () => {
+    const [isHide, setIsHide] = useState<boolean>(true);
+
     const {
         register,
         handleSubmit,
@@ -21,6 +23,10 @@ const LoginForm: React.FC = () => {
         console.log('onSubmit :', data);
     };
 
+    const toggleHide = (): void => {
+        setIsHide((prev) => !prev);
+    };
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <InputWrapper
@@ -29,10 +35,10 @@ const LoginForm: React.FC = () => {
                         <span className="text-red-500">*</span> Login
                     </p>
                 }
-                error={!!errors.username}
                 message={errors.username?.message}
             >
                 <Input
+                    type="text"
                     form={register('username', { required: 'กรุณากรอกชื่อผู้ใช้งาน' })}
                     error={!!errors.username}
                 />
@@ -44,10 +50,15 @@ const LoginForm: React.FC = () => {
                         <span className="text-red-500">*</span> Password
                     </p>
                 }
-                error={!!errors.password}
                 message={errors.password?.message}
+                subMessage={
+                    <button className="btn-link text-white" onClick={toggleHide}>
+                        แสดง?
+                    </button>
+                }
             >
                 <Input
+                    type={isHide ? 'password' : 'text'}
                     form={register('password', { required: 'กรุณากรอกรหัสผ่าน' })}
                     error={!!errors.password}
                 />
@@ -55,7 +66,7 @@ const LoginForm: React.FC = () => {
 
             <div className="w-full text-right">
                 <Link href="/forgot-password">
-                    <button className="btn btn-link">ลืมรหัสผ่าน?</button>
+                    <button className="btn btn-link text-white">ลืมรหัสผ่าน?</button>
                 </Link>
             </div>
 
@@ -66,4 +77,4 @@ const LoginForm: React.FC = () => {
     );
 };
 
-export default LoginForm;
+export default FormLogin;
