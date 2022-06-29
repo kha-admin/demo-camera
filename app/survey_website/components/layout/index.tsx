@@ -16,11 +16,13 @@ type IProps = {
 };
 
 const Layout: React.FC<IProps> = ({ children, head }) => {
-    const {
-        data: { favicon, logo },
-    } = useQuery<IQueryWidgetLogoResult>(I_QUERY_WIDGET_LOGO, async () => queryWidgetLogo(), {
-        staleTime: Infinity,
-    });
+    const { data } = useQuery<IQueryWidgetLogoResult>(
+        I_QUERY_WIDGET_LOGO,
+        async () => queryWidgetLogo(),
+        {
+            staleTime: Infinity,
+        },
+    );
 
     return (
         <Fragment>
@@ -30,14 +32,14 @@ const Layout: React.FC<IProps> = ({ children, head }) => {
                     <meta name="description" content={head.description} />
                     <link
                         rel="shortcut icon"
-                        href={sanityImageProps(favicon).src}
+                        href={sanityImageProps(data?.favicon).src}
                         type="image/x-icon"
                     />
                 </Head>
             )}
             <div className="h-full w-full bg-gray-100">
                 <div className="sticky top-0 z-50">
-                    <Navbar logo={logo} navbarMenu={[]} />
+                    <Navbar logo={data?.logo} navbarMenu={[]} />
                 </div>
                 {children}
             </div>

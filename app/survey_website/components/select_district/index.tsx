@@ -21,13 +21,23 @@ const SelectDistrict: React.FC<IProps> = ({ provinceId, onChange }) => {
         unknown,
         IDistrictData[],
         string[]
-    >([I_GET_THAI_PROVICE_KEY, `provinceId=${provinceId}`], () => getDistrict({ provinceId }), {
-        enabled: !!provinceId,
-        staleTime: Infinity,
-        onSuccess: (result) => {
-            setDistrict(result);
+    >(
+        [I_GET_THAI_PROVICE_KEY, `provinceId=${provinceId}`],
+        () => {
+            if (!provinceId) {
+                return [];
+            }
+
+            return getDistrict({ provinceId });
         },
-    });
+        {
+            enabled: !!provinceId,
+            staleTime: Infinity,
+            onSuccess: (result) => {
+                setDistrict(result);
+            },
+        },
+    );
 
     useEffect(() => {
         setSelectValue('');
@@ -43,10 +53,14 @@ const SelectDistrict: React.FC<IProps> = ({ provinceId, onChange }) => {
                 className="select select-bordered"
                 value={selectValue}
                 disabled={isLoading || !provinceId}
-                onChange={(e) => {
-                    setSelectValue(e.target.value);
-                    onChange(e);
-                }}
+                onChange={
+                    !onChange
+                        ? undefined
+                        : (e) => {
+                              setSelectValue(e.target.value);
+                              onChange(e);
+                          }
+                }
             >
                 <option disabled value="">
                     เลือกอำเภอ / เขต

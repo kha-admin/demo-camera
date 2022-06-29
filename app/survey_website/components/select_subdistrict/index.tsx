@@ -24,7 +24,13 @@ const SelectSubdistrict: React.FC<IProps> = ({ districtId, provinceId }) => {
         string[]
     >(
         [I_GET_THAI_PROVICE_KEY, `provinceId=${provinceId}`, `district=${districtId}`],
-        () => getSubdistrict({ provinceId, districtId }),
+        () => {
+            if (!provinceId || !districtId) {
+                return [];
+            }
+
+            return getSubdistrict({ provinceId, districtId });
+        },
         {
             enabled: !!provinceId,
             staleTime: Infinity,
