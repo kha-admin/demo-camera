@@ -1,26 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
-import { type SubmitHandler, useForm } from 'react-hook-form';
+
+import { useFormForgotPasswordHook } from './hooks';
 
 import Input from '@/components/input';
 import InputWrapper from '@/components/input_wrapper';
 import { regexEmail } from '@/utils/regex';
 
-export interface IForm {
-    username: string;
-    email: string;
-}
-
 const FormForgotPassword: React.FC = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<IForm>();
-
-    const onSubmit: SubmitHandler<IForm> = (data) => {
-        console.log('onSubmit :', data);
-    };
+    const { errors, register, handleSubmit, onSubmit } = useFormForgotPasswordHook();
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -65,7 +53,9 @@ const FormForgotPassword: React.FC = () => {
             </button>
 
             <Link href="/login">
-                <button className="btn btn-link text-white">{'< กลับหน้าแรก'}</button>
+                <button type="button" className="btn btn-link text-white">
+                    {'< กลับหน้าแรก'}
+                </button>
             </Link>
         </form>
     );
