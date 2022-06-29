@@ -21,6 +21,7 @@
       "@/styles/*": ["./styles/*"],
       "@/utils/*": ["./utils/*"],
       "@/data_services/*": ["./data_services/*"],
+      "@/plugins/*": ["./plugins/*"],
     }
   },
   "exclude": ["node_modules"],
