@@ -35,7 +35,7 @@ const FormLogin: React.FC = () => {
                 message={errors.password?.message}
                 subMessage={
                     <button type="button" className="btn-link text-white" onClick={toggleHide}>
-                        แสดง?
+                        {isHide ? 'แสดง?' : 'ซ่อน?'}
                     </button>
                 }
             >
