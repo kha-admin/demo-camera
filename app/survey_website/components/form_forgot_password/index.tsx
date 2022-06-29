@@ -48,7 +48,7 @@ const FormForgotPassword: React.FC = () => {
                 />
             </InputWrapper>
 
-            <button type="submit" className="btn btn-block btn-primary">
+            <button type="submit" className="btn btn-block btn-primary mt-[28px]">
                 ขอกำหนดรหัสผ่านใหม่
             </button>
 

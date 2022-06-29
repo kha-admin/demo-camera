@@ -28,8 +28,8 @@ function useFormForgotPasswordHook(): IUseFormForgotPasswordHookParam {
         handleSubmit,
     } = useForm<IForm>();
 
-    const onSubmit: SubmitHandler<IForm> = (data) => {
-        console.log('onSubmit :', data);
+    const onSubmit: SubmitHandler<IForm> = (_data) => {
+        alert('Not available now.');
     };
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 import React from 'react';
 
 import { useFormLoginHook } from './hooks';
@@ -46,15 +46,16 @@ const FormLogin: React.FC = () => {
                 />
             </InputWrapper>
 
-            <div className="w-full text-right">
+            {/* NOTE: disable this feature in v.1 */}
+            {/* <div className="w-full text-right">
                 <Link href="/forgot-password">
                     <button type="button" className="btn btn-link text-white">
                         ลืมรหัสผ่าน?
                     </button>
                 </Link>
-            </div>
+            </div> */}
 
-            <button type="submit" className="btn btn-block btn-primary">
+            <button type="submit" className="btn btn-block btn-primary mt-[28px]">
                 เข้าสู่ระบบ
             </button>
         </form>
